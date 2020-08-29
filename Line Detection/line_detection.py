@@ -1,4 +1,3 @@
-# https://076923.github.io/posts/Python-opencv-2/
 import cv2
 import numpy as np
 import sys
@@ -86,7 +85,7 @@ def find_point(p1, p2):
 
 # 마우스 콜백 함수
 def mouse_callback(event, x, y, flags, param):
-    global ix, iy, pre_event, count, now_frame
+    global ix, iy, pre_event, count, now_frame, pause, check
 
     pre_event = event
 
@@ -96,7 +95,7 @@ def mouse_callback(event, x, y, flags, param):
             if now_frame is None:
                 now_frame = frame.copy()
 
-            if count < 4:
+            if count <= 4:
                 count += 1
                 tmp = now_frame.copy()
                 pre_frame.append(tmp)
@@ -116,6 +115,31 @@ def mouse_callback(event, x, y, flags, param):
                     ix, iy = -1, -1
 
                 cv2.imshow("Video frame", now_frame)
+
+                if count == 4:
+                    # 반드시 직선 2개가 있어야 마진을 설정할 수 있음
+                    # root = Tk()
+                    # root.title("프로그램")
+                    # root.geometry("500x400")
+                    # root.resizable(0, 0)
+                    #
+                    # text = '마진값'
+                    # lbl = Label(root, text=text, font="NanumGothic 10")
+                    # lbl.grid(row=0, column=0)
+                    # txt = Entry(root)
+                    # txt.grid(row=0, column=1)
+                    #
+                    # confirmBtn = Button(root, text='확인', width=3, height=1, command=margin_setting)
+                    # confirmBtn.grid(row=1, column=1)
+                    #
+                    # root.mainloop()
+
+                    # draw_margin_line()
+                    check = 1
+                    pause = 0
+                    count_corners()
+                    sorting_corners()
+
             else:
                 '''
                 경고 메시지 UI
@@ -144,8 +168,6 @@ def mouse_callback(event, x, y, flags, param):
 
 def makeROI():
     mask = np.zeros(frame.shape, dtype=np.uint8)
-    # roi_corners = np.array([[(corners[0][0], corners[0][1]), (corners[1][0], corners[1][1]),
-    #                          (corners[2][0], corners[2][1]), (corners[3][0], corners[3][1])]], dtype=np.int32)
     roi_corners = np.array([corners], dtype=np.int32)
 
     # fill the ROI so it doesn't get wiped out when the mask is applied
@@ -414,13 +436,6 @@ def system_destroy():
     sys.exit()
 
 
-# def margin_setting():
-#     global margin
-#
-#     margin = txt.get()
-#     root.destroy()
-
-
 '''
 시작 UI
 작동방법 설명
@@ -441,6 +456,7 @@ def system_destroy():
 #
 # root.mainloop()
 
+# https://076923.github.io/posts/Python-opencv-2/
 # n은 카메라의 장치 번호를 의미합니다. 노트북을 이용할 경우, 내장 카메라가 존재하므로 카메라의 장치 번호는 0이 됩니다.
 # 카메라를 추가적으로 연결하여 외장 카메라를 사용하는 경우, 장치 번호가 1~n까지 변화합니다.
 
@@ -452,19 +468,21 @@ capture.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
 capture.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
 
 while True:
-    cv2.setMouseCallback('Video frame', mouse_callback)
-
     # 연속 프레임
     if pause == 0:
         ret, frame = capture.read()
-        cv2.waitKey(1)
+        cv2.namedWindow('Video frame')
+        cv2.setMouseCallback('Video frame', mouse_callback)
+
         if check == 0:
             cv2.imshow("Video frame", frame)
         elif check == 1:
             makeROI()
 
+        cv2.waitKey(100)
+
         # 종료
-        if pre_event == cv2.EVENT_RBUTTONDBLCLK:
+        if pre_event == cv2.EVENT_FLAG_RBUTTON:
             '''
             알림(확인/취소) UI
             '''
@@ -484,7 +502,7 @@ while True:
 
             root.mainloop()
         # 프레임 고정
-        elif pre_event == cv2.EVENT_LBUTTONDBLCLK:
+        elif pre_event == cv2.EVENT_FLAG_LBUTTON:
             pause = 1
             pre_event = -1
             now_frame = None
@@ -499,44 +517,13 @@ while True:
 
     # 고정 프레임
     elif pause == 1:
-        cv2.waitKey(1)
+        cv2.waitKey(100)
 
         # 연속 프레임
-        if pre_event == cv2.EVENT_LBUTTONDBLCLK:
+        if pre_event == cv2.EVENT_FLAG_RBUTTON:
             pause = 0
             pre_event = -1
             check = 0
-        # 마진 설정
-        elif pre_event == cv2.EVENT_FLAG_RBUTTON:
-            if count == 4:
-                # 반드시 직선 2개가 있어야 마진을 설정할 수 있음
-                # root = Tk()
-                # root.title("프로그램")
-                # root.geometry("500x400")
-                # root.resizable(0, 0)
-                #
-                # text = '마진값'
-                # lbl = Label(root, text=text, font="NanumGothic 10")
-                # lbl.grid(row=0, column=0)
-                # txt = Entry(root)
-                # txt.grid(row=0, column=1)
-                #
-                # confirmBtn = Button(root, text='확인', width=3, height=1, command=margin_setting)
-                # confirmBtn.grid(row=1, column=1)
-                #
-                # root.mainloop()
-
-                # draw_margin_line()
-                check = 1
-                pause = 0
-                count_corners()
-                sorting_corners()
-
-            elif count < 4:
-                '''
-                오류 메시지 UI
-                '''
-                # messagebox.showwarning('오류', '직선 두개를 그려주세요')
 
 capture.release()
 cv2.destroyAllWindows()
