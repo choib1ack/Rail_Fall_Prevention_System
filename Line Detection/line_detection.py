@@ -144,6 +144,7 @@ def mouse_callback(event, x, y, flags, param):
                 '''
                 경고 메시지 UI
                 '''
+                warnMsg("더이상 포인트를 찍을 수 없습니다!")
                 # 팝업
                 print('Error: 더이상 포인트를 찍을 수 없습니다.')
 
@@ -476,7 +477,7 @@ def warnMsg(msg):
     warnLbl = Label(msgBox, text=msg)
     warnLbl.pack()
 
-    warnBtn = Button(msgBox, text="확인", command=msgBox.destroy())
+    warnBtn = Button(msgBox, text="확인")
     warnBtn.pack()
 
     msgBox.mainloop()
