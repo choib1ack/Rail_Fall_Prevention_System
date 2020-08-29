@@ -486,10 +486,11 @@ while True:
             count = 0
             check = 0
 
-            cv2.imshow("Video frame", frame)
-
     # 고정 프레임
     elif pause == 1:
+        if count == 0:
+            cv2.imshow("Video frame", frame)
+
         cv2.waitKey(1)
 
         # 연속 프레임
@@ -521,7 +522,8 @@ while True:
                 check = 1
                 pause = 0
                 count_corners()
-                sorting_corners()
+                if count != 0:
+                    sorting_corners()
 
             elif count < 4:
                 '''
