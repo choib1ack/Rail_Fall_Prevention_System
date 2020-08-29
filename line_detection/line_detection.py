@@ -120,6 +120,7 @@ def mouse_callback(event, x, y, flags, param):
                 '''
                 경고 메시지 UI
                 '''
+                warnMsg("더이상 포인트를 찍을 수 없습니다!")
                 # 팝업
                 print('Error: 더이상 포인트를 찍을 수 없습니다.')
 
@@ -138,6 +139,7 @@ def mouse_callback(event, x, y, flags, param):
                 '''
                 경고 메시지 UI
                 '''
+                warnMsg("프레임이 없습니다!")
                 # 팝업
                 print('Error: 프레임이 없습니다.')
 
@@ -261,9 +263,11 @@ def count_corners():
         # 좌표가 한방향으로 찍혀있지 않으면 잘못되었다고 판단
         else:
             '''
-            경고 메시지 UI
-            '''
+             경고 메시지 UI
+             '''
+            warnMsg("직선을 다시 그려주세요!")
             print('Error: 직선을 다시 그려주세요.')
+
             pause = 1
             pre_event = -1
             now_frame = None
@@ -408,29 +412,54 @@ def popup_destroy():
     root.destroy()
 
 
+def start_destroy():
+    start.destroy()
+
+
 def system_destroy():
     sys.exit()
+
+
+def warnMsg(msg):
+    msgBox = Tk()
+    msgBox.title("Warning!")
+    msgBox.geometry("250x50")
+    msgBox.resizable(False, False)
+
+    warnLbl = Label(msgBox, text=msg)
+    warnLbl.pack()
+
+    warnBtn = Button(msgBox, text="확인", command=msgBox.destroy)
+    warnBtn.pack()
+
+    msgBox.mainloop()
 
 
 '''
 시작 UI
 작동방법 설명
 '''
-# root = Tk()
-# root.title("프로그램")
-# root.geometry("500x400")
-# root.resizable(0, 0)
-#
-# text = '관심구역 설정을 진행하겠습니까?\n좌측더블클릭: 영상정지\n우측더블클릭: 설정완료'
-# lbl = Label(root, text=text, font="NanumGothic 10")
-# lbl.grid(row=0, column=0)
-#
-# confirmBtn = Button(root, text='확인', width=3, height=1, command=popup_destroy)
-# confirmBtn.grid(row=1, column=0)
-# closeBtn = Button(root, text='종료', width=3, height=1, command=system_destroy)
-# closeBtn.grid(row=1, column=1)
-#
-# root.mainloop()
+start = Tk()
+start.title("프로그램")
+start.geometry("400x250")
+start.resizable(0, 0)
+
+topFrame = Frame(start, relief="solid", height="100")
+topFrame.pack(side="top")
+
+bottomFrame = Frame(start, relief="solid", height="100")
+bottomFrame.pack(side="bottom", expand=True)
+
+text = '< 관심구역 설정을 진행하겠습니까? >\n\n- 좌측더블클릭: 영상정지\n- 우측더블클릭: 설정완료\n\n'
+lbl = Label(topFrame, text=text, font="NanumGothic 10")
+lbl.pack()
+
+confirmBtn = Button(bottomFrame, text='확인', width=3, height=1, command=start_destroy)
+confirmBtn.grid(row=0, column=0)
+closeBtn = Button(bottomFrame, text='종료', width=3, height=1, command=system_destroy)
+closeBtn.grid(row=0, column=1)
+
+start.mainloop()
 
 # n은 카메라의 장치 번호를 의미합니다. 노트북을 이용할 경우, 내장 카메라가 존재하므로 카메라의 장치 번호는 0이 됩니다.
 # 카메라를 추가적으로 연결하여 외장 카메라를 사용하는 경우, 장치 번호가 1~n까지 변화합니다.
@@ -461,17 +490,22 @@ while True:
             '''
             root = Tk()
             root.title("프로그램")
-            root.geometry("500x400")
+            root.geometry("400x250")
             root.resizable(0, 0)
 
-            text = '종료하시겠습니까?'
-            lbl = Label(root, text=text, font="NanumGothic 10")
-            lbl.grid(row=0, column=0)
+            frame1 = Frame(root, relief="solid", height="100")
+            frame1.pack(side="top")
+            frame2 = Frame(root, relief="solid", height="100")
+            frame2.pack(side="bottom", expand=True)
 
-            confirmBtn = Button(root, text='확인', width=3, height=1, command=system_destroy)
-            confirmBtn.grid(row=1, column=0)
-            cancelBtn = Button(root, text='취소', width=3, height=1, command=popup_destroy)
-            cancelBtn.grid(row=1, column=1)
+            text = '종료하시겠습니까?'
+            lbl = Label(frame1, text=text, font="NanumGothic 10")
+            lbl.pack()
+
+            confirmBtn = Button(frame2, text='확인', width=3, height=1, command=system_destroy)
+            confirmBtn.grid(row=0, column=0)
+            cancelBtn = Button(frame2, text='취소', width=3, height=1, command=popup_destroy)
+            cancelBtn.grid(row=0, column=1)
 
             root.mainloop()
         # 프레임 고정
