@@ -446,17 +446,23 @@ def system_destroy():
 '''
 start = Tk()
 start.title("프로그램")
-start.geometry("500x400")
+start.geometry("500x250")
 start.resizable(0, 0)
 
-text = '관심구역 설정을 진행하겠습니까?\n좌측더블클릭: 영상정지\n우측더블클릭: 설정완료'
-lbl = Label(start, text=text, font="NanumGothic 10")
-lbl.grid(row=0, column=0)
+topFrame=Frame(start, relief="solid", height="100")
+topFrame.pack(side="top")
 
-confirmBtn = Button(start, text='확인', width=3, height=1, command=start_destroy)
-confirmBtn.grid(row=1, column=0)
-closeBtn = Button(start, text='종료', width=3, height=1, command=system_destroy)
-closeBtn.grid(row=1, column=1)
+bottomFrame=Frame(start, relief="solid", height="100")
+bottomFrame.pack(side="bottom", expand=True)
+
+text = '< 관심구역 설정을 진행하겠습니까? >\n\n- 좌측더블클릭: 영상정지\n- 우측더블클릭: 설정완료\n\n'
+lbl = Label(topFrame, text=text, font="NanumGothic 10")
+lbl.pack()
+
+confirmBtn = Button(bottomFrame, text='확인', width=3, height=1, command=start_destroy)
+confirmBtn.grid(row=0, column=0)
+closeBtn = Button(bottomFrame, text='종료', width=3, height=1, command=system_destroy)
+closeBtn.grid(row=0, column=1)
 
 start.mainloop()
 
@@ -507,17 +513,22 @@ while True:
             '''
             root = Tk()
             root.title("프로그램")
-            root.geometry("500x400")
+            root.geometry("500x250")
             root.resizable(0, 0)
 
-            text = '종료하시겠습니까?'
-            lbl = Label(root, text=text, font="NanumGothic 10")
-            lbl.grid(row=0, column=0)
+            frame1=Frame(root, relief="solid", height="100")
+            frame1.pack(side="top")
+            frame2=Frame(root, relief="solid", height="100")
+            frame2.pack(side="bottom", expand=True)
 
-            confirmBtn = Button(root, text='확인', width=3, height=1, command=system_destroy)
-            confirmBtn.grid(row=1, column=0)
-            cancelBtn = Button(root, text='취소', width=3, height=1, command=popup_destroy)
-            cancelBtn.grid(row=1, column=1)
+            text = '종료하시겠습니까?'
+            lbl = Label(frame1, text=text, font="NanumGothic 10")
+            lbl.pack()
+
+            confirmBtn = Button(frame2, text='확인', width=3, height=1, command=system_destroy)
+            confirmBtn.grid(row=0, column=0)
+            cancelBtn = Button(frame2, text='취소', width=3, height=1, command=popup_destroy)
+            cancelBtn.grid(row=0, column=1)
 
             root.mainloop()
         # 프레임 고정
