@@ -163,6 +163,7 @@ def mouse_callback(event, x, y, flags, param):
                 '''
                 경고 메시지 UI
                 '''
+                warnMsg("프레임이 없습니다!")
                 # 팝업
                 print('Error: 프레임이 없습니다.')
 
@@ -288,6 +289,7 @@ def count_corners():
             '''
             경고 메시지 UI
             '''
+            warnMsg("직선을 다시 그려주세요!")
             print('Error: 직선을 다시 그려주세요.')
             pause = 1
             pre_event = -1
@@ -432,6 +434,8 @@ def count_corners():
 def popup_destroy():
     root.destroy()
 
+def start_destroy():
+    start.destroy()
 
 def system_destroy():
     sys.exit()
@@ -440,21 +444,21 @@ def system_destroy():
 시작 UI
 작동방법 설명
 '''
-# root = Tk()
-# root.title("프로그램")
-# root.geometry("500x400")
-# root.resizable(0, 0)
-#
-# text = '관심구역 설정을 진행하겠습니까?\n좌측더블클릭: 영상정지\n우측더블클릭: 설정완료'
-# lbl = Label(root, text=text, font="NanumGothic 10")
-# lbl.grid(row=0, column=0)
-#
-# confirmBtn = Button(root, text='확인', width=3, height=1, command=popup_destroy)
-# confirmBtn.grid(row=1, column=0)
-# closeBtn = Button(root, text='종료', width=3, height=1, command=system_destroy)
-# closeBtn.grid(row=1, column=1)
-#
-# root.mainloop()
+start = Tk()
+start.title("프로그램")
+start.geometry("500x400")
+start.resizable(0, 0)
+
+text = '관심구역 설정을 진행하겠습니까?\n좌측더블클릭: 영상정지\n우측더블클릭: 설정완료'
+lbl = Label(start, text=text, font="NanumGothic 10")
+lbl.grid(row=0, column=0)
+
+confirmBtn = Button(start, text='확인', width=3, height=1, command=start_destroy)
+confirmBtn.grid(row=1, column=0)
+closeBtn = Button(start, text='종료', width=3, height=1, command=system_destroy)
+closeBtn.grid(row=1, column=1)
+
+start.mainloop()
 
 # https://076923.github.io/posts/Python-opencv-2/
 # n은 카메라의 장치 번호를 의미합니다. 노트북을 이용할 경우, 내장 카메라가 존재하므로 카메라의 장치 번호는 0이 됩니다.
@@ -467,22 +471,20 @@ capture = cv2.VideoCapture(0)
 capture.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
 capture.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
 
-#경고 메세지 UI
+# 경고 메세지 UI
 def warnMsg(msg):
     msgBox = Tk()
-    msgBox.title("Warning")
-    msgBox.geometry("200x100")
+    msgBox.title("Warning!")
+    msgBox.geometry("250x50")
     msgBox.resizable(False, False)
 
     warnLbl = Label(msgBox, text=msg)
     warnLbl.pack()
 
-    warnBtn = Button(msgBox, text="확인")
+    warnBtn = Button(msgBox, text="확인", command=msgBox.destroy)
     warnBtn.pack()
 
     msgBox.mainloop()
-
-
 
 while True:
     # 연속 프레임
