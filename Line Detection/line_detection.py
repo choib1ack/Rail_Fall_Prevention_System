@@ -89,12 +89,17 @@ def mouse_callback(event, x, y, flags, param):
 
     pre_event = event
 
-    def saveValue(event):
+    def saveValue():
         # margin_lbl2.config(text=txt.get())
         value = int(txt.get())
         print(value)
         print(type(value))
+
+        destroy_margin()
         # 이쪽에서 값 넘기기
+
+    def destroy_margin():
+        margin.destroy()
 
     # 프레임 고정
     if pause == 1:
@@ -144,15 +149,17 @@ def mouse_callback(event, x, y, flags, param):
                     margin_lbl2.grid(row=1, column=0)
                     value = StringVar()
                     txt = Entry(margin_frame1)
-                    txt.bind("<Return>", saveValue)
+                    # txt.bind("<Return>", checkWindow)
                     txt.grid(row=1, column=1)
 
                     # confirmBtn = Button(margin, text='확인', width=3, height=1, command=margin_setting)
-                    confirmBtn = Button(margin_frame2, text='창 닫기', height=1, command=margin.destroy)
-                    confirmBtn.grid(row=2, column=0, columnspan=2)
+                    confirmBtn = Button(margin_frame2, text='저장하기', height=1, command=saveValue)
+                    confirmBtn.grid(row=2, column=0)
+                    backBtn = Button(margin_frame2, text="돌아가기", height=1, command=destroy_margin)
+                    backBtn.grid(row=2, column=1)
 
                     margin.mainloop()
-                    #
+
                     # draw_margin_line()
                     check = 1
                     pause = 0
