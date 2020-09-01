@@ -1,3 +1,4 @@
+# https://076923.github.io/posts/Python-opencv-2/
 import cv2
 import numpy as np
 import sys
@@ -18,8 +19,10 @@ pre_event = -1
 pre_frame = []
 pre_point = []
 now_point = []
+margin_point = []
 corners = []
 count = 0
+value = 0
 
 
 # 점과 점사이 직선의 윈도우 테두리 점 찾기
@@ -28,10 +31,10 @@ def find_point(p1, p2):
     # b -> 절편
     if p2[1] == p1[1]:
         c = round(p1[1])
-        return (0, c), (WIDTH, c)
+        return 0, c, WIDTH, c
     if p2[0] == p1[0]:
         c = round(p1[0])
-        return (c, 0), (c, HEIGHT)
+        return c, 0, c, HEIGHT
 
     a = (p2[0] - p1[0]) / (p2[1] - p1[1])
     b = (-1) * a * p1[1] + p1[0]
@@ -84,22 +87,10 @@ def find_point(p1, p2):
 
 
 # 마우스 콜백 함수
-def mouse_callback(event, x, y, flags, param):
-    global ix, iy, pre_event, count, now_frame, pause, check
+def mouse_callback(event, x, y):
+    global ix, iy, pre_event, count, now_frame
 
     pre_event = event
-
-    def saveValue():
-        # margin_lbl2.config(text=txt.get())
-        value = int(txt.get())
-        print(value)
-        print(type(value))
-
-        destroy_margin()
-        # 이쪽에서 값 넘기기
-
-    def destroy_margin():
-        margin.destroy()
 
     # 프레임 고정
     if pause == 1:
@@ -107,7 +98,7 @@ def mouse_callback(event, x, y, flags, param):
             if now_frame is None:
                 now_frame = frame.copy()
 
-            if count <= 4:
+            if count < 4:
                 count += 1
                 tmp = now_frame.copy()
                 pre_frame.append(tmp)
@@ -127,50 +118,11 @@ def mouse_callback(event, x, y, flags, param):
                     ix, iy = -1, -1
 
                 cv2.imshow("Video frame", now_frame)
-
-                if count == 4:
-                    # 반드시 직선 2개가 있어야 마진을 설정할 수 있음
-                    margin = Tk()
-                    margin.title("Set margin")
-                    centerWindow(margin, 400, 250)
-                    margin.resizable(0, 0)
-
-                    margin_frame1 = Frame(margin, height=100)
-                    margin_frame1.pack(side="top")
-                    margin_frame2 = Frame(margin, height=100)
-                    margin_frame2.pack(expand=True)
-
-                    margin_text = '< 마진을 설정해주세요 >\n(마진값 저장-> Enter key)\n\n'
-                    margin_lbl1 = Label(margin_frame1, text=margin_text, font="NanumGothic 10")
-                    margin_lbl1.grid(row=0, column=0, columnspan=2)
-
-                    text = '마진값:  '
-                    margin_lbl2 = Label(margin_frame1, text=text, font="NanumGothic 10")
-                    margin_lbl2.grid(row=1, column=0)
-                    value = StringVar()
-                    txt = Entry(margin_frame1)
-                    # txt.bind("<Return>", checkWindow)
-                    txt.grid(row=1, column=1)
-
-                    # confirmBtn = Button(margin, text='확인', width=3, height=1, command=margin_setting)
-                    confirmBtn = Button(margin_frame2, text='저장하기', height=1, command=saveValue)
-                    confirmBtn.grid(row=2, column=0)
-                    backBtn = Button(margin_frame2, text="돌아가기", height=1, command=destroy_margin)
-                    backBtn.grid(row=2, column=1)
-
-                    margin.mainloop()
-
-                    # draw_margin_line()
-                    check = 1
-                    pause = 0
-                    count_corners()
-                    sorting_corners()
-
             else:
                 '''
                 경고 메시지 UI
                 '''
-                warnMsg("더이상 포인트를 찍을 수 없습니다!")
+                warn_msg("더이상 포인트를 찍을 수 없습니다!")
                 # 팝업
                 print('Error: 더이상 포인트를 찍을 수 없습니다.')
 
@@ -189,12 +141,12 @@ def mouse_callback(event, x, y, flags, param):
                 '''
                 경고 메시지 UI
                 '''
-                warnMsg("프레임이 없습니다!")
+                warn_msg("프레임이 없습니다!")
                 # 팝업
                 print('Error: 프레임이 없습니다.')
 
 
-def makeROI():
+def make_roi():
     mask = np.zeros(frame.shape, dtype=np.uint8)
     roi_corners = np.array([corners], dtype=np.int32)
 
@@ -248,18 +200,19 @@ def count_corners():
     global pause, pre_event, now_frame, ix, iy, count, check
 
     # 사용자가 찍은 점 4개의 좌표
-    x1, y1 = now_point[0][0], now_point[0][1]
-    x2, y2 = now_point[1][0], now_point[1][1]
-    x3, y3 = now_point[2][0], now_point[2][1]
-    x4, y4 = now_point[3][0], now_point[3][1]
+    x = []
+    y = []
+    for point in margin_point:
+        x.append(point[0])
+        y.append(point[1])
 
     # 사용자가 찍은 4개의 점으로부터 만들어진 직선이 윈도우 테두리에 맞닿는 좌표
-    fx1, fy1, fx2, fy2 = find_point((x1, y1), (x2, y2))
-    fx3, fy3, fx4, fy4 = find_point((x3, y3), (x4, y4))
+    fx1, fy1, fx2, fy2 = find_point((x[0], y[0]), (x[1], y[1]))
+    fx3, fy3, fx4, fy4 = find_point((x[2], y[2]), (x[3], y[3]))
 
     # 두 직선의 교차점이 윈도우 내부에 있는지 확인
     # 윈도우 내부에 있다면 해당 좌표를 반환하고 외부에 있거나 존재하지 않으면 (-1, -1) 반환
-    cx, cy = check_intersection(x1, y1, x2, y2, x3, y3, x4, y4)
+    cx, cy = check_intersection(x[0], y[0], x[1], y[1], x[2], y[2], x[3], y[3])
 
     flag = 0
     # 교차점이 윈도우 내부에 있다면
@@ -267,7 +220,7 @@ def count_corners():
         corners.append((cx, cy))
 
         # 교차점 기준 점 4개가 좌측에 있음
-        if x1 <= cx and x2 <= cx and x3 <= cx and x4 <= cx:
+        if x[0] <= cx and x[1] <= cx and x[2] <= cx and x[3] <= cx:
             if fx1 <= cx:
                 corners.append((fx1, fy1))
             elif fx2 <= cx:
@@ -278,7 +231,7 @@ def count_corners():
                 corners.append((fx4, fy4))
             flag = 1
         # 교차점 기준 점 4개가 우측에 있음
-        elif x1 >= cx and x2 >= cx and x3 >= cx and x4 >= cx:
+        elif x[0] >= cx and x[1] >= cx and x[2] >= cx and x[3] >= cx:
             if fx1 >= cx:
                 corners.append((fx1, fy1))
             elif fx2 >= cx:
@@ -289,7 +242,7 @@ def count_corners():
                 corners.append((fx4, fy4))
             flag = 2
         # 교차점 기준 점 4개가 하단에 있음
-        elif y1 <= cy and y2 <= cy and y3 <= cy and y4 <= cy:
+        elif y[0] <= cy and y[1] <= cy and y[2] <= cy and y[3] <= cy:
             if fy1 <= cy:
                 corners.append((fx1, fy1))
             elif fy2 <= cy:
@@ -300,7 +253,7 @@ def count_corners():
                 corners.append((fx4, fy4))
             flag = 3
         # 교차점 기준 점 4개가 상단에 있음
-        elif y1 >= cy and y2 >= cy and y3 >= cy and y4 >= cy:
+        elif y[0] >= cy and y[1] >= cy and y[2] >= cy and y[3] >= cy:
             if fy1 >= cy:
                 corners.append((fx1, fy1))
             elif fy2 >= cy:
@@ -313,10 +266,11 @@ def count_corners():
         # 좌표가 한방향으로 찍혀있지 않으면 잘못되었다고 판단
         else:
             '''
-            경고 메시지 UI
-            '''
-            warnMsg("직선을 다시 그려주세요!")
+             경고 메시지 UI
+             '''
+            warn_msg("직선을 다시 그려주세요!")
             print('Error: 직선을 다시 그려주세요.')
+
             pause = 1
             pre_event = -1
             now_frame = None
@@ -448,13 +402,71 @@ def count_corners():
 
         elif count == 0:
             # 4개의 면에 하나씩 선분이 지나가는 경우 -> 두 직선의 기울기가 같은 부호임
-            a = (x1 - x2) / (y1 - y2)
+            a = (x[0] - x[1]) / (y[0] - y[1])
             if a > 0:
                 corners.append((0, 0))
                 corners.append((WIDTH, HEIGHT))
             elif a < 0:
                 corners.append((WIDTH, 0))
                 corners.append((0, HEIGHT))
+
+
+def draw_margin_line():
+    # 사용자가 찍은 점 4개의 좌표
+    x = []
+    y = []
+    for point in now_point:
+        x.append(point[0])
+        y.append(point[1])
+
+    # x축과 맞물리는 각도를 구한다
+    theta = []
+    slope = []
+    for i in range(0, 3, 2):
+        if x[i] == x[i + 1]:
+            theta.append(90)
+            slope.append(0)
+        elif y[i] == y[i + 1]:
+            theta.append(0)
+            slope.append(sys.maxsize)
+        else:
+            dx = abs(x[i + 1] - x[i])
+            dy = abs(y[i + 1] - y[i])
+            theta.append(math.degrees(math.atan(dy / dx)))
+            slope.append((y[i + 1] - y[i]) / (x[i + 1] - x[i]))
+
+    if x[0] <= x[2] or x[0] <= x[3]:
+
+    # # y축과 평행
+    # if x[0] == x[1] and x[2] == x[3]:
+    #     if x[0] < x[2]:
+    #         margin_point.append((x[0] - value, y[0]))
+    #         margin_point.append((x[1] - value, y[1]))
+    #         margin_point.append((x[2] + value, y[2]))
+    #         margin_point.append((x[3] + value, y[3]))
+    #     elif x[0] > x[2]:
+    #         margin_point.append((x[0] + value, y[0]))
+    #         margin_point.append((x[1] + value, y[1]))
+    #         margin_point.append((x[2] - value, y[2]))
+    #         margin_point.append((x[3] - value, y[3]))
+    # # x축과 평행
+    # elif y[0] == y[1] and y[2] == y[3]:
+    #     if y[0] < y[2]:
+    #         margin_point.append((x[0], y[0] - value))
+    #         margin_point.append((x[1], y[1] - value))
+    #         margin_point.append((x[2], y[2] + value))
+    #         margin_point.append((x[3], y[3] + value))
+    #     elif y[0] > y[2]:
+    #         margin_point.append((x[0], y[0] + value))
+    #         margin_point.append((x[1], y[1] + value))
+    #         margin_point.append((x[2], y[2] - value))
+    #         margin_point.append((x[3], y[3] - value))
+    # # 두직선이 직각이며 각각 x,y축과 평행
+    # # elif x[0] == x[1] and y[2] == y[3]:
+    # # elif x[2] == x[3] and y[0] == y[1]:
+    # else:
+
+    # if theta[0] * theta[1] > 0:
 
 
 def popup_destroy():
@@ -469,8 +481,13 @@ def system_destroy():
     sys.exit()
 
 
+def save_value():
+    global value
+    value = int(txt.get())
+
+
 # UI창을 가운데 놓기 (ui, 창의 가로크기, 창의 세로크기)
-def centerWindow(ui, width, height):
+def center_window(ui, width, height):
     # get screen width and height
     screen_width = ui.winfo_screenwidth()
     screen_height = ui.winfo_screenheight()
@@ -481,14 +498,28 @@ def centerWindow(ui, width, height):
     ui.geometry('%dx%d+%d+%d' % (width, height, x, y))
 
 
+def warn_msg(msg):
+    msgBox = Tk()
+    msgBox.title("Warning!")
+    center_window(msgBox, 250, 50)
+    msgBox.resizable(False, False)
+
+    warnLbl = Label(msgBox, text=msg)
+    warnLbl.pack()
+
+    warnBtn = Button(msgBox, text="확인", command=msgBox.destroy)
+    warnBtn.pack()
+
+    msgBox.mainloop()
+
+
 '''
 시작 UI
 작동방법 설명
 '''
-
 start = Tk()
 start.title("프로그램")
-centerWindow(start, 400, 250)
+center_window(start, 400, 250)
 start.resizable(0, 0)
 
 topFrame = Frame(start, relief="solid", height="100")
@@ -508,7 +539,6 @@ closeBtn.grid(row=0, column=1)
 
 start.mainloop()
 
-# https://076923.github.io/posts/Python-opencv-2/
 # n은 카메라의 장치 번호를 의미합니다. 노트북을 이용할 경우, 내장 카메라가 존재하므로 카메라의 장치 번호는 0이 됩니다.
 # 카메라를 추가적으로 연결하여 외장 카메라를 사용하는 경우, 장치 번호가 1~n까지 변화합니다.
 
@@ -519,45 +549,26 @@ capture = cv2.VideoCapture(0)
 capture.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
 capture.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
 
-
-# 경고 메세지 UI
-def warnMsg(msg):
-    msgBox = Tk()
-    msgBox.title("Warning!")
-    centerWindow(msgBox, 250, 50)
-    msgBox.resizable(False, False)
-
-    warnLbl = Label(msgBox, text=msg, font="NanumGothic 10")
-    warnLbl.pack()
-
-    warnBtn = Button(msgBox, text="확인", command=msgBox.destroy)
-    warnBtn.pack()
-
-    msgBox.mainloop()
-
-
 while True:
+    cv2.setMouseCallback('Video frame', mouse_callback)
+
     # 연속 프레임
     if pause == 0:
         ret, frame = capture.read()
-        cv2.namedWindow('Video frame')
-        cv2.setMouseCallback('Video frame', mouse_callback)
-
+        cv2.waitKey(1)
         if check == 0:
             cv2.imshow("Video frame", frame)
         elif check == 1:
-            makeROI()
-
-        cv2.waitKey(100)
+            make_roi()
 
         # 종료
-        if pre_event == cv2.EVENT_FLAG_RBUTTON:
+        if pre_event == cv2.EVENT_RBUTTONDBLCLK:
             '''
             알림(확인/취소) UI
             '''
             root = Tk()
             root.title("프로그램")
-            centerWindow(root, 400, 250)
+            center_window(root, 400, 250)
             root.resizable(0, 0)
 
             frame1 = Frame(root, relief="solid", height="100")
@@ -576,7 +587,7 @@ while True:
 
             root.mainloop()
         # 프레임 고정
-        elif pre_event == cv2.EVENT_FLAG_LBUTTON:
+        elif pre_event == cv2.EVENT_LBUTTONDBLCLK:
             pause = 1
             pre_event = -1
             now_frame = None
@@ -587,17 +598,63 @@ while True:
             count = 0
             check = 0
 
-            cv2.imshow("Video frame", frame)
-
     # 고정 프레임
     elif pause == 1:
-        cv2.waitKey(100)
+        if count == 0:
+            cv2.imshow("Video frame", frame)
+
+        cv2.waitKey(1)
 
         # 연속 프레임
-        if pre_event == cv2.EVENT_FLAG_RBUTTON:
+        if pre_event == cv2.EVENT_LBUTTONDBLCLK:
             pause = 0
             pre_event = -1
             check = 0
+        # 마진 설정
+        elif pre_event == cv2.EVENT_FLAG_RBUTTON:
+            if count == 4:
+                # 반드시 직선 2개가 있어야 마진을 설정할 수 있음
+                margin = Tk()
+                margin.title("Set margin")
+                center_window(margin, 400, 250)
+                margin.resizable(0, 0)
+
+                margin_frame1 = Frame(margin, height=100)
+                margin_frame1.pack(side="top")
+                margin_frame2 = Frame(margin, height=100)
+                margin_frame2.pack(expand=True)
+
+                margin_text = '< 마진을 설정해주세요 >\n(마진값 저장-> Enter key)\n\n'
+                margin_lbl1 = Label(margin_frame1, text=margin_text, font="NanumGothic 10")
+                margin_lbl1.grid(row=0, column=0, columnspan=2)
+
+                text = '마진값:  '
+                margin_lbl2 = Label(margin_frame1, text=text, font="NanumGothic 10")
+                margin_lbl2.grid(row=1, column=0)
+                # value = StringVar()
+                txt = Entry(margin_frame1)
+                txt.bind("<Return>", save_value)
+                txt.grid(row=1, column=1)
+
+                # confirmBtn = Button(margin, text='확인', width=3, height=1, command=margin_setting)
+                confirmBtn = Button(margin_frame2, text='창 닫기', height=1, command=margin.destroy)
+                confirmBtn.grid(row=2, column=0, columnspan=2)
+
+                margin.mainloop()
+
+                draw_margin_line()
+
+                check = 1
+                pause = 0
+                count_corners()
+                if count != 0:
+                    sorting_corners()
+
+            elif count < 4:
+                '''
+                오류 메시지 UI
+                '''
+                warn_msg("직선 두개를 그려주세요")
 
 capture.release()
 cv2.destroyAllWindows()
