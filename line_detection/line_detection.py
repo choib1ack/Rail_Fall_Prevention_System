@@ -472,14 +472,11 @@ def draw_margin_line():
 def popup_destroy():
     root.destroy()
 
-
 def start_destroy():
     start.destroy()
 
-
 def system_destroy():
     sys.exit()
-
 
 def save_value():
     global value

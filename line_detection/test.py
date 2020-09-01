@@ -89,27 +89,17 @@ def mouse_callback(event, x, y, flags, param):
 
     pre_event = event
 
-<<<<<<< HEAD:Line Detection/line_detection.py
     def saveValue():
-=======
-    def saveValue(event):
->>>>>>> upstream/master:line_detection/test.py
         # margin_lbl2.config(text=txt.get())
         value = int(txt.get())
         print(value)
         print(type(value))
-<<<<<<< HEAD:Line Detection/line_detection.py
-
         destroy_margin()
-        # 이쪽에서 값 넘기기
 
     def destroy_margin():
         margin.destroy()
 
-=======
         # 이쪽에서 값 넘기기
-
->>>>>>> upstream/master:line_detection/test.py
     # 프레임 고정
     if pause == 1:
         if event == cv2.EVENT_FLAG_LBUTTON:
@@ -158,7 +148,6 @@ def mouse_callback(event, x, y, flags, param):
                     margin_lbl2.grid(row=1, column=0)
                     value = StringVar()
                     txt = Entry(margin_frame1)
-<<<<<<< HEAD:Line Detection/line_detection.py
                     # txt.bind("<Return>", checkWindow)
                     txt.grid(row=1, column=1)
 
@@ -170,17 +159,8 @@ def mouse_callback(event, x, y, flags, param):
 
                     margin.mainloop()
 
-=======
                     txt.bind("<Return>", saveValue)
                     txt.grid(row=1, column=1)
-
-                    # confirmBtn = Button(margin, text='확인', width=3, height=1, command=margin_setting)
-                    confirmBtn = Button(margin_frame2, text='창 닫기', height=1, command=margin.destroy)
-                    confirmBtn.grid(row=2, column=0, columnspan=2)
-
-                    margin.mainloop()
-                    #
->>>>>>> upstream/master:line_detection/test.py
                     # draw_margin_line()
                     check = 1
                     pause = 0
