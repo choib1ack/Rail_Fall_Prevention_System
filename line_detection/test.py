@@ -89,6 +89,13 @@ def mouse_callback(event, x, y, flags, param):
 
     pre_event = event
 
+    def saveValue(event):
+        # margin_lbl2.config(text=txt.get())
+        value = int(txt.get())
+        print(value)
+        print(type(value))
+        # 이쪽에서 값 넘기기
+
     # 프레임 고정
     if pause == 1:
         if event == cv2.EVENT_FLAG_LBUTTON:
@@ -118,22 +125,34 @@ def mouse_callback(event, x, y, flags, param):
 
                 if count == 4:
                     # 반드시 직선 2개가 있어야 마진을 설정할 수 있음
-                    # root = Tk()
-                    # root.title("프로그램")
-                    # root.geometry("500x400")
-                    # root.resizable(0, 0)
-                    #
-                    # text = '마진값'
-                    # lbl = Label(root, text=text, font="NanumGothic 10")
-                    # lbl.grid(row=0, column=0)
-                    # txt = Entry(root)
-                    # txt.grid(row=0, column=1)
-                    #
-                    # confirmBtn = Button(root, text='확인', width=3, height=1, command=margin_setting)
-                    # confirmBtn.grid(row=1, column=1)
-                    #
-                    # root.mainloop()
+                    margin = Tk()
+                    margin.title("Set margin")
+                    centerWindow(margin, 400, 250)
+                    margin.resizable(0, 0)
 
+                    margin_frame1 = Frame(margin, height=100)
+                    margin_frame1.pack(side="top")
+                    margin_frame2 = Frame(margin, height=100)
+                    margin_frame2.pack(expand=True)
+
+                    margin_text = '< 마진을 설정해주세요 >\n(마진값 저장-> Enter key)\n\n'
+                    margin_lbl1 = Label(margin_frame1, text=margin_text, font="NanumGothic 10")
+                    margin_lbl1.grid(row=0, column=0, columnspan=2)
+
+                    text = '마진값:  '
+                    margin_lbl2 = Label(margin_frame1, text=text, font="NanumGothic 10")
+                    margin_lbl2.grid(row=1, column=0)
+                    value = StringVar()
+                    txt = Entry(margin_frame1)
+                    txt.bind("<Return>", saveValue)
+                    txt.grid(row=1, column=1)
+
+                    # confirmBtn = Button(margin, text='확인', width=3, height=1, command=margin_setting)
+                    confirmBtn = Button(margin_frame2, text='창 닫기', height=1, command=margin.destroy)
+                    confirmBtn.grid(row=2, column=0, columnspan=2)
+
+                    margin.mainloop()
+                    #
                     # draw_margin_line()
                     check = 1
                     pause = 0
@@ -434,25 +453,41 @@ def count_corners():
 def popup_destroy():
     root.destroy()
 
+
 def start_destroy():
     start.destroy()
 
+
 def system_destroy():
     sys.exit()
+
+
+# UI창을 가운데 놓기 (ui, 창의 가로크기, 창의 세로크기)
+def centerWindow(ui, width, height):
+    # get screen width and height
+    screen_width = ui.winfo_screenwidth()
+    screen_height = ui.winfo_screenheight()
+    # 창을 놓을 수 있는 위치를 계산
+    x = (screen_width / 2) - (width / 2)
+    y = (screen_height / 2) - (height / 2)
+
+    ui.geometry('%dx%d+%d+%d' % (width, height, x, y))
+
 
 '''
 시작 UI
 작동방법 설명
 '''
+
 start = Tk()
 start.title("프로그램")
-start.geometry("400x250")
+centerWindow(start, 400, 250)
 start.resizable(0, 0)
 
-topFrame=Frame(start, relief="solid", height="100")
+topFrame = Frame(start, relief="solid", height="100")
 topFrame.pack(side="top")
 
-bottomFrame=Frame(start, relief="solid", height="100")
+bottomFrame = Frame(start, relief="solid", height="100")
 bottomFrame.pack(side="bottom", expand=True)
 
 text = '< 관심구역 설정을 진행하겠습니까? >\n\n- 좌측더블클릭: 영상정지\n- 우측더블클릭: 설정완료\n\n'
@@ -477,20 +512,22 @@ capture = cv2.VideoCapture(0)
 capture.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
 capture.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
 
+
 # 경고 메세지 UI
 def warnMsg(msg):
     msgBox = Tk()
     msgBox.title("Warning!")
-    msgBox.geometry("250x50")
+    centerWindow(msgBox, 250, 50)
     msgBox.resizable(False, False)
 
-    warnLbl = Label(msgBox, text=msg)
+    warnLbl = Label(msgBox, text=msg, font="NanumGothic 10")
     warnLbl.pack()
 
     warnBtn = Button(msgBox, text="확인", command=msgBox.destroy)
     warnBtn.pack()
 
     msgBox.mainloop()
+
 
 while True:
     # 연속 프레임
@@ -513,12 +550,12 @@ while True:
             '''
             root = Tk()
             root.title("프로그램")
-            root.geometry("400x250")
+            centerWindow(root, 400, 250)
             root.resizable(0, 0)
 
-            frame1=Frame(root, relief="solid", height="100")
+            frame1 = Frame(root, relief="solid", height="100")
             frame1.pack(side="top")
-            frame2=Frame(root, relief="solid", height="100")
+            frame2 = Frame(root, relief="solid", height="100")
             frame2.pack(side="bottom", expand=True)
 
             text = '종료하시겠습니까?'
