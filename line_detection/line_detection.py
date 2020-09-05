@@ -87,7 +87,7 @@ def find_point(p1, p2):
 
 
 # 마우스 콜백 함수
-def mouse_callback(event, x, y):
+def mouse_callback(event, x, y, flags, param):
     global ix, iy, pre_event, count, now_frame
 
     pre_event = event
@@ -98,7 +98,15 @@ def mouse_callback(event, x, y):
             if now_frame is None:
                 now_frame = frame.copy()
 
-            if count < 4:
+            if ix == x and iy == y:
+                '''
+                경고 메시지 UI
+                '''
+                warn_msg("같은 위치에 점을 찍을 수 없습니다!")
+                # 팝업
+                print('Error: 같은 위치에 점을 찍을 수 없습니다.')
+
+            elif count < 4:
                 count += 1
                 tmp = now_frame.copy()
                 pre_frame.append(tmp)
@@ -122,9 +130,9 @@ def mouse_callback(event, x, y):
                 '''
                 경고 메시지 UI
                 '''
-                warn_msg("더이상 포인트를 찍을 수 없습니다!")
+                warn_msg("더이상 점을 찍을 수 없습니다!")
                 # 팝업
-                print('Error: 더이상 포인트를 찍을 수 없습니다.')
+                print('Error: 더이상 점을 찍을 수 없습니다.')
 
         elif event == cv2.EVENT_MOUSEWHEEL:
             # 뒤로가기
@@ -191,7 +199,7 @@ def check_intersection(x1, y1, x2, y2, x3, y3, x4, y4):
         cx = m1 * (cy - y1) + x1
 
     if 0 <= cx <= WIDTH and 0 <= cy <= HEIGHT:
-        return cx, cy
+        return round(cx), round(cy)
     else:
         return -1, -1
 
@@ -213,56 +221,159 @@ def count_corners():
     # 두 직선의 교차점이 윈도우 내부에 있는지 확인
     # 윈도우 내부에 있다면 해당 좌표를 반환하고 외부에 있거나 존재하지 않으면 (-1, -1) 반환
     cx, cy = check_intersection(x[0], y[0], x[1], y[1], x[2], y[2], x[3], y[3])
-
     flag = 0
     # 교차점이 윈도우 내부에 있다면
-    if cx != -1:
+    if cx != -1 and cy != -1:
         corners.append((cx, cy))
 
         # 교차점 기준 점 4개가 좌측에 있음
         if x[0] <= cx and x[1] <= cx and x[2] <= cx and x[3] <= cx:
-            if fx1 <= cx:
+            # 직각
+            if fx1 == cx and fx2 == cx:
+                if y[0] <= cy and y[1] <= cy:
+                    if fy1 == 0:
+                        corners.append((fx1, fy1))
+                    elif fy2 == 0:
+                        corners.append((fx2, fy2))
+                elif y[0] >= cy and y[1] >= cy:
+                    if fy1 == HEIGHT:
+                        corners.append((fx1, fy1))
+                    elif fy2 == HEIGHT:
+                        corners.append((fx2, fy2))
+
+            elif fx3 == cx and fx4 == cx:
+                if y[2] <= cy and y[3] <= cy:
+                    if fy3 == 0:
+                        corners.append((fx3, fy3))
+                    elif fy4 == 0:
+                        corners.append((fx4, fy4))
+                elif y[2] >= cy and y[3] >= cy:
+                    if fy3 == HEIGHT:
+                        corners.append((fx3, fy3))
+                    elif fy4 == HEIGHT:
+                        corners.append((fx4, fy4))
+            if fx1 < cx:
                 corners.append((fx1, fy1))
-            elif fx2 <= cx:
+            elif fx2 < cx:
                 corners.append((fx2, fy2))
-            if fx3 <= cx:
+            if fx3 < cx:
                 corners.append((fx3, fy3))
-            elif fx4 <= cx:
+            elif fx4 < cx:
                 corners.append((fx4, fy4))
+
             flag = 1
+
         # 교차점 기준 점 4개가 우측에 있음
         elif x[0] >= cx and x[1] >= cx and x[2] >= cx and x[3] >= cx:
-            if fx1 >= cx:
+            # 직각
+            if fx1 == cx and fx2 == cx:
+                if y[0] <= cy and y[1] <= cy:
+                    if fy1 == 0:
+                        corners.append((fx1, fy1))
+                    elif fy2 == 0:
+                        corners.append((fx2, fy2))
+                elif y[0] >= cy and y[1] >= cy:
+                    if fy1 == HEIGHT:
+                        corners.append((fx1, fy1))
+                    elif fy2 == HEIGHT:
+                        corners.append((fx2, fy2))
+
+            elif fx3 == cx and fx4 == cx:
+                if y[2] <= cy and y[3] <= cy:
+                    if fy3 == 0:
+                        corners.append((fx3, fy3))
+                    elif fy4 == 0:
+                        corners.append((fx4, fy4))
+                elif y[2] >= cy and y[3] >= cy:
+                    if fy3 == HEIGHT:
+                        corners.append((fx3, fy3))
+                    elif fy4 == HEIGHT:
+                        corners.append((fx4, fy4))
+            if fx1 > cx:
                 corners.append((fx1, fy1))
-            elif fx2 >= cx:
+            elif fx2 > cx:
                 corners.append((fx2, fy2))
-            if fx3 >= cx:
+            if fx3 > cx:
                 corners.append((fx3, fy3))
-            elif fx4 >= cx:
+            elif fx4 > cx:
                 corners.append((fx4, fy4))
+
             flag = 2
+
         # 교차점 기준 점 4개가 하단에 있음
         elif y[0] <= cy and y[1] <= cy and y[2] <= cy and y[3] <= cy:
-            if fy1 <= cy:
+            # 직각
+            if fy1 == cy and fy2 == cy:
+                if x[0] <= cx and x[1] <= cx:
+                    if fx1 == 0:
+                        corners.append((fx1, fy1))
+                    elif fx2 == 0:
+                        corners.append((fx2, fy2))
+                elif x[0] >= cx and x[1] >= cx:
+                    if fx1 == WIDTH:
+                        corners.append((fx1, fy1))
+                    elif fx2 == WIDTH:
+                        corners.append((fx2, fy2))
+
+            elif fy3 == cy and fy4 == cy:
+                if x[2] <= cx and x[3] <= cx:
+                    if fx3 == 0:
+                        corners.append((fx3, fy3))
+                    elif fx4 == 0:
+                        corners.append((fx4, fy4))
+                elif x[2] >= cx and x[3] >= cx:
+                    if fx3 == WIDTH:
+                        corners.append((fx3, fy3))
+                    elif fx4 == WIDTH:
+                        corners.append((fx4, fy4))
+            if fy1 < cy:
                 corners.append((fx1, fy1))
-            elif fy2 <= cy:
+            elif fy2 < cy:
                 corners.append((fx2, fy2))
-            if fy3 <= cy:
+            if fy3 < cy:
                 corners.append((fx3, fy3))
-            elif fy4 <= cy:
+            elif fy4 < cy:
                 corners.append((fx4, fy4))
+
             flag = 3
+
         # 교차점 기준 점 4개가 상단에 있음
         elif y[0] >= cy and y[1] >= cy and y[2] >= cy and y[3] >= cy:
-            if fy1 >= cy:
+            # 직각
+            if fy1 == cy and fy2 == cy:
+                if x[0] <= cx and x[1] <= cx:
+                    if fx1 == 0:
+                        corners.append((fx1, fy1))
+                    elif fx2 == 0:
+                        corners.append((fx2, fy2))
+                elif x[0] >= cx and x[1] >= cx:
+                    if fx1 == WIDTH:
+                        corners.append((fx1, fy1))
+                    elif fx2 == WIDTH:
+                        corners.append((fx2, fy2))
+
+            elif fy3 == cy and fy4 == cy:
+                if x[2] <= cx and x[3] <= cx:
+                    if fx3 == 0:
+                        corners.append((fx3, fy3))
+                    elif fx4 == 0:
+                        corners.append((fx4, fy4))
+                elif x[2] >= cx and x[3] >= cx:
+                    if fx3 == WIDTH:
+                        corners.append((fx3, fy3))
+                    elif fx4 == WIDTH:
+                        corners.append((fx4, fy4))
+            if fy1 > cy:
                 corners.append((fx1, fy1))
-            elif fy2 >= cy:
+            elif fy2 > cy:
                 corners.append((fx2, fy2))
-            if fy3 >= cy:
+            if fy3 > cy:
                 corners.append((fx3, fy3))
-            elif fy4 >= cy:
+            elif fy4 > cy:
                 corners.append((fx4, fy4))
+
             flag = 4
+
         # 좌표가 한방향으로 찍혀있지 않으면 잘못되었다고 판단
         else:
             '''
@@ -278,6 +389,8 @@ def count_corners():
             del pre_point[:]
             del now_point[:]
             del corners[:]
+            del margin_point[:]
+            del pre_frame[:]
             count = 0
             check = 0
 
@@ -352,8 +465,8 @@ def count_corners():
         # 2개의 직선이 지나가는 면이 2개 -> 4개의 포인트로 진행
         # 2개의 직선이 지나가는 면이 1개 -> 모서리 포인트 추가
         # 2개의 직선이 지나가는 면이 0개 -> 양쪽 코너 추가
-        count = intersections.count(2)
-        if count == 1:
+        cnt = intersections.count(2)
+        if cnt:
             i = intersections.index(2)  # 지나가는 선분이 2개인 면 인덱스
             j = i  # 지나가는 선분이 2개인 면의 반대면 인덱스
             if i > 1:
@@ -400,7 +513,7 @@ def count_corners():
                     corners.append((0, 0))
                     corners.append((0, HEIGHT))
 
-        elif count == 0:
+        elif cnt == 0:
             # 4개의 면에 하나씩 선분이 지나가는 경우 -> 두 직선의 기울기가 같은 부호임
             a = (x[0] - x[1]) / (y[0] - y[1])
             if a > 0:
@@ -409,6 +522,11 @@ def count_corners():
             elif a < 0:
                 corners.append((WIDTH, 0))
                 corners.append((0, HEIGHT))
+
+
+# 점 p3 가 직선(p1-p2)의 왼쪽 공간에 있다면 음수, 오른쪽 공간에 있다면 양수, 직선과 겹친다면 0
+def check_direction(p1, p2, p3):
+    return (p2[0] - p1[0]) * (p3[1] - p1[1]) - (p3[0] - p1[0]) * (p2[1] - p1[1])
 
 
 def draw_margin_line():
@@ -432,41 +550,334 @@ def draw_margin_line():
         else:
             dx = abs(x[i + 1] - x[i])
             dy = abs(y[i + 1] - y[i])
-            theta.append(math.degrees(math.atan(dy / dx)))
+            theta.append(math.atan(dy / dx))
             slope.append((y[i + 1] - y[i]) / (x[i + 1] - x[i]))
 
-    if x[0] <= x[2] or x[0] <= x[3]:
+    # 방향성을 아래 -> 위 or 왼 -> 오 바꿈
+    if y[0] < y[1]:
+        x[0], x[1] = x[1], x[0]
+        y[0], y[1] = y[1], y[0]
+    elif y[0] == y[1] and x[0] > x[1]:
+        x[0], x[1] = x[1], x[0]
+        y[0], y[1] = y[1], y[0]
 
-    # # y축과 평행
-    # if x[0] == x[1] and x[2] == x[3]:
-    #     if x[0] < x[2]:
-    #         margin_point.append((x[0] - value, y[0]))
-    #         margin_point.append((x[1] - value, y[1]))
-    #         margin_point.append((x[2] + value, y[2]))
-    #         margin_point.append((x[3] + value, y[3]))
-    #     elif x[0] > x[2]:
-    #         margin_point.append((x[0] + value, y[0]))
-    #         margin_point.append((x[1] + value, y[1]))
-    #         margin_point.append((x[2] - value, y[2]))
-    #         margin_point.append((x[3] - value, y[3]))
-    # # x축과 평행
-    # elif y[0] == y[1] and y[2] == y[3]:
-    #     if y[0] < y[2]:
-    #         margin_point.append((x[0], y[0] - value))
-    #         margin_point.append((x[1], y[1] - value))
-    #         margin_point.append((x[2], y[2] + value))
-    #         margin_point.append((x[3], y[3] + value))
-    #     elif y[0] > y[2]:
-    #         margin_point.append((x[0], y[0] + value))
-    #         margin_point.append((x[1], y[1] + value))
-    #         margin_point.append((x[2], y[2] - value))
-    #         margin_point.append((x[3], y[3] - value))
-    # # 두직선이 직각이며 각각 x,y축과 평행
-    # # elif x[0] == x[1] and y[2] == y[3]:
-    # # elif x[2] == x[3] and y[0] == y[1]:
-    # else:
+    direction = check_direction((x[0], y[0]), (x[1], y[1]), (x[2], y[2]))
+    vx1 = value * math.sin(theta[0])
+    vy1 = value * math.cos(theta[0])
+    vx2 = value * math.sin(theta[1])
+    vy2 = value * math.cos(theta[1])
 
-    # if theta[0] * theta[1] > 0:
+    mp11, mp12 = (-1, -1), (-1, -1)
+    mp21, mp22 = (-1, -1), (-1, -1)
+
+    cx, cy = check_intersection(x[0], y[0], x[1], y[1], x[2], y[2], x[3], y[3])
+
+    print(direction)
+    print(slope)
+
+    if direction > 0:
+        if slope[0] == 0:
+            mp11 = (x[0] - value, y[0])
+            mp12 = (x[1] - value, y[1])
+
+            # 0 - 0
+            if slope[1] == 0:
+                mp21 = (x[2] + value, y[2])
+                mp22 = (x[3] + value, y[3])
+
+            # 0 - 180
+            elif slope[1] == sys.maxsize:
+                if y[2] <= y[0] and y[2] <= y[1]:
+                    mp21 = (x[2], y[2] - value)
+                    mp22 = (x[3], y[3] - value)
+                elif y[2] >= y[0] and y[2] >= y[1]:
+                    mp21 = (x[2], y[2] + value)
+                    mp22 = (x[3], y[3] + value)
+
+            # 0 - +
+            # 0 - -
+            else:
+                if slope[1] > 0:
+                    if y[2] >= cy and y[3] >= cy and y[0] <= cy and y[1] <= cy:
+                        mp21 = (x[2] - vx2, y[2] + vy2)
+                        mp22 = (x[3] - vx2, y[3] + vy2)
+                    else:
+                        mp21 = (x[2] + vx2, y[2] - vy2)
+                        mp22 = (x[3] + vx2, y[3] - vy2)
+
+                elif slope[1] < 0:
+                    if y[2] <= cy and y[3] <= cy and y[0] >= cy and y[1] >= cy:
+                        mp21 = (x[2] - vx2, y[2] - vy2)
+                        mp22 = (x[3] - vx2, y[3] - vy2)
+                    else:
+                        mp21 = (x[2] + vx2, y[2] + vy2)
+                        mp22 = (x[3] + vx2, y[3] + vy2)
+
+        elif slope[0] == sys.maxsize:
+            mp11 = (x[0], y[0] - value)
+            mp12 = (x[1], y[1] - value)
+
+            # 180 - 180
+            if slope[1] == sys.maxsize:
+                mp21 = (x[2], y[2] + value)
+                mp22 = (x[3], y[3] + value)
+
+            # 180 - 0
+            elif slope[1] == 0:
+                mp21 = (x[2] + value, y[2])
+                mp22 = (x[3] + value, y[3])
+
+            # 180 - +
+            # 180 - -
+            else:
+                if slope[1] > 0:
+                    if x[2] >= cx and x[3] >= cx and x[0] <= cx and x[1] <= cx:
+                        mp21 = (x[2] + vx2, y[2] - vy2)
+                        mp22 = (x[3] + vx2, y[3] - vy2)
+                    else:
+                        mp21 = (x[2] - vx2, y[2] + vy2)
+                        mp22 = (x[3] - vx2, y[3] + vy2)
+
+                elif slope[1] < 0:
+                    if x[2] <= cx and x[3] <= cx and x[0] >= cx and x[1] >= cx:
+                        mp21 = (x[2] - vx2, y[2] - vy2)
+                        mp22 = (x[3] - vx2, y[3] - vy2)
+                    else:
+                        mp21 = (x[2] + vx2, y[2] + vy2)
+                        mp22 = (x[3] + vx2, y[3] + vy2)
+
+        elif slope[0] > 0:
+            mp11 = (x[0] - vx1, y[0] + vy1)
+            mp12 = (x[1] - vx1, y[1] + vy1)
+
+            # + - 0
+            if slope[1] == 0:
+                if x[2] <= x[0] and x[2] <= x[1]:
+                    mp21 = (x[2] - value, y[2])
+                    mp22 = (x[3] - value, y[3])
+                elif x[2] >= x[0] and x[2] >= x[1]:
+                    mp21 = (x[2] + value, y[2])
+                    mp22 = (x[3] + value, y[3])
+
+            # + - 180
+            elif slope[1] == sys.maxsize:
+                if y[2] <= y[0] and y[2] <= y[1]:
+                    mp21 = (x[2], y[2] - value)
+                    mp22 = (x[3], y[3] - value)
+                elif y[2] >= y[0] and y[2] >= y[1]:
+                    mp21 = (x[2], y[2] + value)
+                    mp22 = (x[3], y[3] + value)
+
+            # + - +
+            elif slope[1] > 0:
+                mp21 = (x[2] + vx2, y[2] - vy2)
+                mp22 = (x[3] + vx2, y[3] - vy2)
+
+            # + - -
+            elif slope[1] < 0:
+                if y[2] <= y[0] and y[2] <= y[1]:
+                    mp21 = (x[2] - vx2, y[2] - vy2)
+                    mp22 = (x[3] - vx2, y[3] - vy2)
+                elif x[2] >= x[0] and x[2] >= x[1]:
+                    mp21 = (x[2] + vx2, y[2] + vy2)
+                    mp22 = (x[3] + vx2, y[3] + vy2)
+
+        elif slope[0] < 0:
+            mp11 = (x[0] - vx1, y[0] - vy1)
+            mp12 = (x[1] - vx1, y[1] - vy1)
+
+            # - - 0
+            if slope[1] == 0:
+                if x[2] <= x[0] and x[2] <= x[1]:
+                    mp21 = (x[2] - value, y[2])
+                    mp22 = (x[3] - value, y[3])
+                elif x[2] >= x[0] and x[2] >= x[1]:
+                    mp21 = (x[2] + value, y[2])
+                    mp22 = (x[3] + value, y[3])
+
+            # - - 180
+            elif slope[1] == sys.maxsize:
+                if y[2] <= y[0] and y[2] <= y[1]:
+                    mp21 = (x[2], y[2] - value)
+                    mp22 = (x[3], y[3] - value)
+                elif y[2] >= y[0] and y[2] >= y[1]:
+                    mp21 = (x[2], y[2] + value)
+                    mp22 = (x[3], y[3] + value)
+
+            # - - +
+            elif slope[1] > 0:
+                if y[2] >= y[0] and y[2] >= y[1]:
+                    mp21 = (x[2] - vx2, y[2] + vy2)
+                    mp22 = (x[3] - vx2, y[3] + vy2)
+                elif x[2] >= x[0] and x[2] >= x[1]:
+                    mp21 = (x[2] + vx2, y[2] - vy2)
+                    mp22 = (x[3] + vx2, y[3] - vy2)
+
+            # - - -
+            elif slope[1] < 0:
+                mp21 = (x[2] + vx2, y[2] + vy2)
+                mp22 = (x[3] + vx2, y[3] + vy2)
+
+    elif direction < 0:
+        if slope[0] == 0:
+            mp11 = (x[0] + value, y[0])
+            mp12 = (x[1] + value, y[1])
+
+            # 0 - 0
+            if slope[1] == 0:
+                if x[2] <= x[0] and x[2] <= x[1]:
+                    mp21 = (x[2] - value, y[2])
+                    mp22 = (x[3] - value, y[3])
+                elif x[2] >= x[0] and x[2] >= x[1]:
+                    mp21 = (x[2] + value, y[2])
+                    mp22 = (x[3] + value, y[3])
+
+            # 0 - 180
+            elif slope[1] == sys.maxsize:
+                if y[2] <= y[0] and y[2] <= y[1]:
+                    mp21 = (x[2], y[2] - value)
+                    mp22 = (x[3], y[3] - value)
+                elif y[2] >= y[0] and y[2] >= y[1]:
+                    mp21 = (x[2], y[2] + value)
+                    mp22 = (x[3], y[3] + value)
+
+            # 0 - +
+            # 0 - -
+            else:
+                if slope[1] > 0:
+                    if y[2] <= cy and y[3] <= cy and y[0] >= cy and y[1] >= cy:
+                        mp21 = (x[2] + vx2, y[2] - vy2)
+                        mp22 = (x[3] + vx2, y[3] - vy2)
+                    else:
+                        mp21 = (x[2] - vx2, y[2] + vy2)
+                        mp22 = (x[3] - vx2, y[3] + vy2)
+
+                elif slope[1] < 0:
+                    if y[2] >= cy and y[3] >= cy and y[0] <= cy and y[1] <= cy:
+                        mp21 = (x[2] + vx2, y[2] + vy2)
+                        mp22 = (x[3] + vx2, y[3] + vy2)
+                    else:
+                        mp21 = (x[2] - vx2, y[2] - vy2)
+                        mp22 = (x[3] - vx2, y[3] - vy2)
+
+        elif slope[0] == sys.maxsize:
+            mp11 = (x[0], y[0] + value)
+            mp12 = (x[1], y[1] + value)
+
+            # 180 - 180
+            if slope[1] == sys.maxsize:
+                mp21 = (x[2], y[2] - value)
+                mp22 = (x[3], y[3] - value)
+
+            # 180 - 0
+            elif slope[1] == 0:
+                if x[2] <= x[0] and x[2] <= x[1]:
+                    mp21 = (x[2] - value, y[2])
+                    mp22 = (x[3] - value, y[3])
+                elif x[2] >= x[0] and x[2] >= x[1]:
+                    mp21 = (x[2] + value, y[2])
+                    mp22 = (x[3] + value, y[3])
+
+            # 180 - +
+            # 180 - -
+            else:
+                if slope[1] > 0:
+                    if x[2] <= cx and x[3] <= cx and x[0] >= cx and x[1] >= cx:
+                        mp21 = (x[2] - vx2, y[2] + vy2)
+                        mp22 = (x[3] - vx2, y[3] + vy2)
+                    else:
+                        mp21 = (x[2] + vx2, y[2] - vy2)
+                        mp22 = (x[3] + vx2, y[3] - vy2)
+
+                elif slope[1] < 0:
+                    if x[2] >= cx and x[3] >= cx and x[0] <= cx and x[1] <= cx:
+                        mp21 = (x[2] + vx2, y[2] + vy2)
+                        mp22 = (x[3] + vx2, y[3] + vy2)
+                    else:
+                        mp21 = (x[2] - vx2, y[2] - vy2)
+                        mp22 = (x[3] - vx2, y[3] - vy2)
+
+        elif slope[0] > 0:
+            mp11 = (x[0] + vx1, y[0] - vy1)
+            mp12 = (x[1] + vx1, y[1] - vy1)
+
+            # + - 0
+            if slope[1] == 0:
+                if x[2] <= x[0] and x[2] <= x[1]:
+                    mp21 = (x[2] - value, y[2])
+                    mp22 = (x[3] - value, y[3])
+                elif x[2] >= x[0] and x[2] >= x[1]:
+                    mp21 = (x[2] + value, y[2])
+                    mp22 = (x[3] + value, y[3])
+
+            # + - 180
+            elif slope[1] == sys.maxsize:
+                if y[2] <= y[0] and y[2] <= y[1]:
+                    mp21 = (x[2], y[2] - value)
+                    mp22 = (x[3], y[3] - value)
+                elif y[2] >= y[0] and y[2] >= y[1]:
+                    mp21 = (x[2], y[2] + value)
+                    mp22 = (x[3], y[3] + value)
+
+            # + - +
+            elif slope[1] > 0:
+                mp21 = (x[2] - vx2, y[2] + vy2)
+                mp22 = (x[3] - vx2, y[3] + vy2)
+
+            # + - -
+            elif slope[1] < 0:
+                if y[2] >= y[0] and y[2] >= y[1]:
+                    mp21 = (x[2] + vx2, y[2] + vy2)
+                    mp22 = (x[3] + vx2, y[3] + vy2)
+                elif x[2] <= x[0] and x[2] <= x[1]:
+                    mp21 = (x[2] - vx2, y[2] - vy2)
+                    mp22 = (x[3] - vx2, y[3] - vy2)
+
+        elif slope[0] < 0:
+            mp11 = (x[0] + vx1, y[0] + vy1)
+            mp12 = (x[1] + vx1, y[1] + vy1)
+
+            # - - 0
+            if slope[1] == 0:
+                if x[2] <= x[0] and x[2] <= x[1]:
+                    mp21 = (x[2] - value, y[2])
+                    mp22 = (x[3] - value, y[3])
+                elif x[2] >= x[0] and x[2] >= x[1]:
+                    mp21 = (x[2] + value, y[2])
+                    mp22 = (x[3] + value, y[3])
+
+            # - - 180
+            elif slope[1] == sys.maxsize:
+                if y[2] <= y[0] and y[2] <= y[1]:
+                    mp21 = (x[2], y[2] - value)
+                    mp22 = (x[3], y[3] - value)
+                elif y[2] >= y[0] and y[2] >= y[1]:
+                    mp21 = (x[2], y[2] + value)
+                    mp22 = (x[3], y[3] + value)
+
+            # - - +
+            elif slope[1] > 0:
+                mp21 = (x[2] - vx2, y[2] + vy2)
+                mp22 = (x[3] - vx2, y[3] + vy2)
+                if y[2] <= y[0] and y[2] <= y[1]:
+                    mp21 = (x[2] + vx2, y[2] - vy2)
+                    mp22 = (x[3] + vx2, y[3] - vy2)
+                elif x[2] <= x[0] and x[2] <= x[1]:
+                    mp21 = (x[2] - vx2, y[2] + vy2)
+                    mp22 = (x[3] - vx2, y[3] + vy2)
+
+            # - - -
+            elif slope[1] < 0:
+                mp21 = (x[2] - vx2, y[2] - vy2)
+                mp22 = (x[3] - vx2, y[3] - vy2)
+
+    margin_point.append((round(mp11[0]), round(mp11[1])))
+    margin_point.append((round(mp12[0]), round(mp12[1])))
+    margin_point.append((round(mp21[0]), round(mp21[1])))
+    margin_point.append((round(mp22[0]), round(mp22[1])))
+
+    # elif direction == 0:
+    '''이거랑 직각'''
 
 
 def popup_destroy():
@@ -481,7 +892,7 @@ def system_destroy():
     sys.exit()
 
 
-def save_value():
+def save_value(event):
     global value
     value = int(txt.get())
 
@@ -559,6 +970,11 @@ while True:
         if check == 0:
             cv2.imshow("Video frame", frame)
         elif check == 1:
+            fx1, fy1, fx2, fy2 = find_point((now_point[0][0], now_point[0][1]), (now_point[1][0], now_point[1][1]))
+            fx3, fy3, fx4, fy4 = find_point((now_point[2][0], now_point[2][1]), (now_point[3][0], now_point[3][1]))
+            cv2.line(frame, (fx1, fy1), (fx2, fy2), (0, 0, 255), 1)
+            cv2.line(frame, (fx3, fy3), (fx4, fy4), (0, 0, 255), 1)
+
             make_roi()
 
         # 종료
@@ -588,6 +1004,7 @@ while True:
             root.mainloop()
         # 프레임 고정
         elif pre_event == cv2.EVENT_LBUTTONDBLCLK:
+            ret, frame = capture.read()
             pause = 1
             pre_event = -1
             now_frame = None
@@ -595,6 +1012,8 @@ while True:
             del pre_point[:]
             del now_point[:]
             del corners[:]
+            del pre_frame[:]
+            del margin_point[:]
             count = 0
             check = 0
 
@@ -643,12 +1062,19 @@ while True:
                 margin.mainloop()
 
                 draw_margin_line()
+                print('1')
+                print(now_point)
+
+                count_corners()
+                print('2')
+                print(now_point)
+                if count != 0:
+                    sorting_corners()
+                print('3')
+                print(now_point)
 
                 check = 1
                 pause = 0
-                count_corners()
-                if count != 0:
-                    sorting_corners()
 
             elif count < 4:
                 '''
