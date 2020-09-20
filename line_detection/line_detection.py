@@ -394,6 +394,8 @@ def count_corners():
             count = 0
             check = 0
 
+            return
+
     # 교차점이 외부에 있거나 존재하지 않으면
     else:
         corners.append((fx1, fy1))
@@ -522,6 +524,7 @@ def count_corners():
             elif a < 0:
                 corners.append((WIDTH, 0))
                 corners.append((0, HEIGHT))
+    print(check)
 
 
 # 점 p3 가 직선(p1-p2)의 왼쪽 공간에 있다면 음수, 오른쪽 공간에 있다면 양수, 직선과 겹친다면 0
@@ -571,9 +574,6 @@ def draw_margin_line():
     mp21, mp22 = (-1, -1), (-1, -1)
 
     cx, cy = check_intersection(x[0], y[0], x[1], y[1], x[2], y[2], x[3], y[3])
-
-    print(direction)
-    print(slope)
 
     if direction > 0:
         if slope[0] == 0:
@@ -939,7 +939,8 @@ topFrame.pack(side="top")
 bottomFrame = Frame(start, relief="solid", height="100")
 bottomFrame.pack(side="bottom", expand=True)
 
-text = '< 관심구역 설정을 진행하겠습니까? >\n\n- 좌측더블클릭: 영상정지\n- 우측더블클릭: 설정완료\n\n'
+text = '< 관심구역 설정을 진행하겠습니까? >\n\n- 마우스좌측더블클릭: 영상정지\n- 마우스우측더블클릭: 프로그램종료' \
+       '\n- 마우스좌측클릭: 좌표지정\n- 마우스우측클릭: 마진설정\n\n'
 lbl = Label(topFrame, text=text, font="NanumGothic 10")
 lbl.pack()
 
@@ -962,6 +963,9 @@ capture.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
 
 while True:
     cv2.setMouseCallback('Video frame', mouse_callback)
+
+    print(pause)
+    print(check)
 
     # 연속 프레임
     if pause == 0:
@@ -1021,7 +1025,6 @@ while True:
     elif pause == 1:
         if count == 0:
             cv2.imshow("Video frame", frame)
-
         cv2.waitKey(1)
 
         # 연속 프레임
@@ -1062,19 +1065,13 @@ while True:
                 margin.mainloop()
 
                 draw_margin_line()
-                print('1')
-                print(now_point)
 
                 count_corners()
-                print('2')
-                print(now_point)
                 if count != 0:
                     sorting_corners()
-                print('3')
-                print(now_point)
 
-                check = 1
-                pause = 0
+                    check = 1
+                    pause = 0
 
             elif count < 4:
                 '''
