@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:layout_gravity="center"
+        android:layout_width="250dp"
+        android:text="192.168.43.33"
+        android:layout_height="wrap_content"
+        android:id="@+id/server_ip"/>
+
+<!--    <Button-->
+<!--        android:id="@+id/alert_create"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="생성" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/alert_remove"-->
+<!--        android:text="삭제"-->
+<!--        android:layout_marginBottom="30dp"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"/>-->
+    <Button
+        android:id="@+id/alert_startService"
+        android:text="서비스 시작"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/alert_endService2"
+        android:text="서비스 삭제"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
