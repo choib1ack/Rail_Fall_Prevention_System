@@ -524,7 +524,6 @@ def count_corners():
             elif a < 0:
                 corners.append((WIDTH, 0))
                 corners.append((0, HEIGHT))
-    print(check)
 
 
 # 점 p3 가 직선(p1-p2)의 왼쪽 공간에 있다면 음수, 오른쪽 공간에 있다면 양수, 직선과 겹친다면 0
@@ -940,7 +939,7 @@ bottomFrame = Frame(start, relief="solid", height="100")
 bottomFrame.pack(side="bottom", expand=True)
 
 text = '< 관심구역 설정을 진행하겠습니까? >\n\n- 마우스좌측더블클릭: 영상정지\n- 마우스우측더블클릭: 프로그램종료' \
-       '\n- 마우스좌측클릭: 좌표지정\n- 마우스우측클릭: 마진설정\n\n'
+       '\n- 마우스좌측클릭: 좌표지정\n- 마우스우측클릭: 마진설정\n- 마우스휠스크롤: 뒤로가기\n\n'
 lbl = Label(topFrame, text=text, font="NanumGothic 10")
 lbl.pack()
 
@@ -963,9 +962,6 @@ capture.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
 
 while True:
     cv2.setMouseCallback('Video frame', mouse_callback)
-
-    print(pause)
-    print(check)
 
     # 연속 프레임
     if pause == 0:
@@ -1035,6 +1031,7 @@ while True:
         # 마진 설정
         elif pre_event == cv2.EVENT_FLAG_RBUTTON:
             if count == 4:
+                value = 0
                 # 반드시 직선 2개가 있어야 마진을 설정할 수 있음
                 margin = Tk()
                 margin.title("Set margin")
