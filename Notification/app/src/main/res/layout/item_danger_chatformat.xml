@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:gravity="top|center"
+            android:src="@drawable/logo" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="left|center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/chat_box"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/dash_location2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:text="[ 서울역 1번 탑승구 ] 위험 감지"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <ImageView
+                android:id="@+id/dash_image2"
+                android:layout_width="200dp"
+                android:minHeight="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"/>
+
+            <Button
+                android:id="@+id/dash_state_btn2"
+                android:layout_width="70dp"
+                android:layout_height="20dp"
+                android:layout_gravity="end"
+                android:background="@drawable/button_state_ok"
+                android:text="처리완료"
+                android:textSize="10dp"
+                android:textColor="@color/white"
+                android:layout_marginBottom="10dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/dash_datetime2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:text="2020/08/19 16:19:11"
+            android:textSize="11dp" />
+
+    </LinearLayout>
+
+    <!--        <View-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:layout_weight="1"/>-->
+
+</LinearLayout>

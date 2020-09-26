@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@drawable/dash_list_selector"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:paddingLeft="20dp"
+        android:gravity="left|center">
+
+        <TextView
+            android:id="@+id/dash_datetime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2020/08/19 16:19:11"
+            android:textColor="@color/gray1"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/dash_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[서울역 1번 탑승구] 위험 감지"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <Button
+            android:id="@+id/dash_state_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="@drawable/button_state_ok"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="처리"/>
+    </LinearLayout>
+
+
+</LinearLayout>
