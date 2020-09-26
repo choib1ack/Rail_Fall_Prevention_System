@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import sys
 from tkinter import *
+from PIL import ImageTk, Image
 from tkinter import messagebox
 from functools import reduce
 import operator
@@ -481,6 +482,23 @@ def centerWindow(ui, width, height):
 
     ui.geometry('%dx%d+%d+%d' % (width, height, x, y))
 
+# 설명 UI
+def moreInfo():
+    more = Tk()
+    more.title("More Information")
+    centerWindow(more, 900, 550)
+    more.resizable(False, False)
+
+    img = PhotoImage(master=more, file="setting.png")
+
+    lbl1 = Label(more, image=img)
+    lbl1.pack()
+
+    goHomeButton = Button(more, text='돌아가기', command=more.destroy)
+    goHomeButton.pack()
+
+    more.mainloop()
+
 
 '''
 시작 UI
@@ -501,6 +519,9 @@ bottomFrame.pack(side="bottom", expand=True)
 text = '< 관심구역 설정을 진행하겠습니까? >\n\n- 좌측더블클릭: 영상정지\n- 우측더블클릭: 설정완료\n\n'
 lbl = Label(topFrame, text=text, font="NanumGothic 10")
 lbl.pack()
+
+moreBtn = Button(topFrame, text="자세히", width=4, height=1, command=moreInfo)
+moreBtn.pack()
 
 confirmBtn = Button(bottomFrame, text='확인', width=3, height=1, command=start_destroy)
 confirmBtn.grid(row=0, column=0)
