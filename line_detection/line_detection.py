@@ -960,6 +960,8 @@ capture = cv2.VideoCapture(0)
 capture.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
 capture.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
 
+cv2.namedWindow('Video frame')
+
 while True:
     cv2.setMouseCallback('Video frame', mouse_callback)
 
@@ -978,7 +980,7 @@ while True:
             make_roi()
 
         # 종료
-        if pre_event == cv2.EVENT_RBUTTONDBLCLK:
+        if cv2.waitKey(1) & 0xFF == ord('q'):
             '''
             알림(확인/취소) UI
             '''
@@ -1003,7 +1005,7 @@ while True:
 
             root.mainloop()
         # 프레임 고정
-        elif pre_event == cv2.EVENT_LBUTTONDBLCLK:
+        elif cv2.waitKey(1) & 0xFF == ord('f'):
             ret, frame = capture.read()
             pause = 1
             pre_event = -1
@@ -1024,7 +1026,7 @@ while True:
         cv2.waitKey(1)
 
         # 연속 프레임
-        if pre_event == cv2.EVENT_LBUTTONDBLCLK:
+        if cv2.waitKey(1) & 0xFF == ord('f'):
             pause = 0
             pre_event = -1
             check = 0
