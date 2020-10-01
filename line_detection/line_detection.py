@@ -1026,7 +1026,7 @@ while True:
         cv2.waitKey(1)
 
         # 연속 프레임
-        if cv2.waitKey(1) & 0xFF == ord('f'):
+        if cv2.waitKey(1) & 0xFF == ord('d'):
             pause = 0
             pre_event = -1
             check = 0
