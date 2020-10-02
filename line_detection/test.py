@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import sys
 from tkinter import *
+from PIL import ImageTk, Image
 from tkinter import messagebox
 from functools import reduce
 import operator
@@ -89,13 +90,17 @@ def mouse_callback(event, x, y, flags, param):
 
     pre_event = event
 
-    def saveValue(event):
+    def saveValue():
         # margin_lbl2.config(text=txt.get())
         value = int(txt.get())
         print(value)
         print(type(value))
-        # 이쪽에서 값 넘기기
+        destroy_margin()
 
+    def destroy_margin():
+        margin.destroy()
+
+        # 이쪽에서 값 넘기기
     # 프레임 고정
     if pause == 1:
         if event == cv2.EVENT_FLAG_LBUTTON:
@@ -144,15 +149,19 @@ def mouse_callback(event, x, y, flags, param):
                     margin_lbl2.grid(row=1, column=0)
                     value = StringVar()
                     txt = Entry(margin_frame1)
-                    txt.bind("<Return>", saveValue)
+                    # txt.bind("<Return>", checkWindow)
                     txt.grid(row=1, column=1)
 
                     # confirmBtn = Button(margin, text='확인', width=3, height=1, command=margin_setting)
-                    confirmBtn = Button(margin_frame2, text='창 닫기', height=1, command=margin.destroy)
-                    confirmBtn.grid(row=2, column=0, columnspan=2)
+                    confirmBtn = Button(margin_frame2, text='저장하기', height=1, command=saveValue)
+                    confirmBtn.grid(row=2, column=0)
+                    backBtn = Button(margin_frame2, text="돌아가기", height=1, command=destroy_margin)
+                    backBtn.grid(row=2, column=1)
 
                     margin.mainloop()
-                    #
+
+                    txt.bind("<Return>", saveValue)
+                    txt.grid(row=1, column=1)
                     # draw_margin_line()
                     check = 1
                     pause = 0
@@ -481,7 +490,7 @@ def centerWindow(ui, width, height):
 
 start = Tk()
 start.title("프로그램")
-centerWindow(start, 400, 250)
+centerWindow(start, 900, 550)
 start.resizable(0, 0)
 
 topFrame = Frame(start, relief="solid", height="100")
@@ -490,11 +499,12 @@ topFrame.pack(side="top")
 bottomFrame = Frame(start, relief="solid", height="100")
 bottomFrame.pack(side="bottom", expand=True)
 
-text = '< 관심구역 설정을 진행하겠습니까? >\n\n- 좌측더블클릭: 영상정지\n- 우측더블클릭: 설정완료\n\n'
-lbl = Label(topFrame, text=text, font="NanumGothic 10")
-lbl.pack()
+image = PhotoImage(master=topFrame, file="explanation.png")
 
-confirmBtn = Button(bottomFrame, text='확인', width=3, height=1, command=start_destroy)
+lbl = Label(topFrame, image = image)
+lbl.pack();
+
+confirmBtn = Button(bottomFrame, text='설정시작!', width=6, height=1, command=start_destroy)
 confirmBtn.grid(row=0, column=0)
 closeBtn = Button(bottomFrame, text='종료', width=3, height=1, command=system_destroy)
 closeBtn.grid(row=0, column=1)
