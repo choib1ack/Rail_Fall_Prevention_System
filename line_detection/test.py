@@ -498,7 +498,7 @@ topFrame.pack(side="top")
 
 bottomFrame = Frame(start, relief="solid", height="100")
 bottomFrame.pack(side="bottom", expand=True)
-
+3
 image = PhotoImage(master=topFrame, file="explanation.png")
 
 lbl = Label(topFrame, image = image)
@@ -525,18 +525,19 @@ capture.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
 
 # 경고 메세지 UI
 def warnMsg(msg):
-    msgBox = Tk()
-    msgBox.title("Warning!")
-    centerWindow(msgBox, 250, 50)
-    msgBox.resizable(False, False)
-
-    warnLbl = Label(msgBox, text=msg, font="NanumGothic 10")
-    warnLbl.pack()
-
-    warnBtn = Button(msgBox, text="확인", command=msgBox.destroy)
-    warnBtn.pack()
-
-    msgBox.mainloop()
+    # msgBox = Tk()
+    # msgBox.title("Warning!")
+    # centerWindow(msgBox, 250, 50)
+    # msgBox.resizable(False, False)
+    #
+    # warnLbl = Label(msgBox, text=msg, font="NanumGothic 10")
+    # warnLbl.pack()
+    #
+    # warnBtn = Button(msgBox, text="확인", command=msgBox.destroy)
+    # warnBtn.pack()
+    #
+    # msgBox.mainloop()
+    messagebox.showerror("Error!", msg)
 
 
 while True:
