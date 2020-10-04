@@ -968,7 +968,7 @@ while True:
             make_roi()
 
         # 종료
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        if cv2.waitKey(1) & 0xFF == ord('q'): #q를 누르면 종료
             '''
             알림(확인/취소) UI
             '''
@@ -993,7 +993,7 @@ while True:
 
             root.mainloop()
         # 프레임 고정
-        elif cv2.waitKey(1) & 0xFF == ord('f'):
+        elif cv2.waitKey(1) & 0xFF == ord('f'): # 프레임 고정
             ret, frame = capture.read()
             pause = 1
             pre_event = -1
@@ -1045,9 +1045,10 @@ while True:
                 txt.bind("<Return>", save_value)
                 txt.grid(row=1, column=1)
 
-                # confirmBtn = Button(margin, text='확인', width=3, height=1, command=margin_setting)
-                confirmBtn = Button(margin_frame2, text='창 닫기', height=1, command=margin.destroy)
-                confirmBtn.grid(row=2, column=0, columnspan=2)
+                confirmBtn = Button(margin_frame2, text='확인', height=1, command=margin.destroy)
+                confirmBtn.grid(row=2, column=0)
+                backBtn = Button(margin_frame2, text='창 닫기', height=1, command=margin.destroy)
+                backBtn.grid(row=2, column=1)
 
                 margin.mainloop()
 
