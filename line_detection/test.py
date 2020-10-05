@@ -5,6 +5,7 @@ import sys
 from tkinter import *
 from tkinter import messagebox
 from functools import reduce
+from multiprocessing import Process
 import operator
 import math
 
@@ -937,6 +938,17 @@ closeBtn = Button(bottomFrame, text='종료', width=3, height=1, command=system_
 closeBtn.grid(row=0, column=1)
 
 start.mainloop()
+
+# 멀티 스레드 구현부분 (제어 part와 카메라 part를 나눈다)
+'''
+제어 UI
+'''
+control = Tk()
+control.title("Control cam")
+center_window(control, 300, 400)
+control.resizable(False, False)
+
+control.mainloop()
 
 # n은 카메라의 장치 번호를 의미합니다. 노트북을 이용할 경우, 내장 카메라가 존재하므로 카메라의 장치 번호는 0이 됩니다.
 # 카메라를 추가적으로 연결하여 외장 카메라를 사용하는 경우, 장치 번호가 1~n까지 변화합니다.
