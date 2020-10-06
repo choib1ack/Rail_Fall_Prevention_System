@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TrainNoti</string>
+    <string name="app_name">Notification</string>
     <string name="detail">Detail</string>
     <string name="ok">OK</string>
     <string name="later">Later</string>

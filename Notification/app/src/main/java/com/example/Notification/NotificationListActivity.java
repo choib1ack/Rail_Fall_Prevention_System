@@ -1,4 +1,4 @@
-package com.example.trainnoti2;
+package com.example.Notification;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -45,6 +45,8 @@ public class NotificationListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.notilist_recyclerview);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
+        ((LinearLayoutManager) layoutManager).setReverseLayout(true);
+        ((LinearLayoutManager) layoutManager).setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new NotificationListAdapter(this, notification_list);
         recyclerView.setAdapter(adapter);
@@ -82,7 +84,7 @@ public class NotificationListActivity extends AppCompatActivity {
                     }
                     adapter.notifyDataSetChanged();
                 }catch(DatabaseException e){
-                    Log.e("DB Listener trycatch", e.toString());
+                    Log.e("DB Listener trycatch3", e.toString());
                 }
             }
             @Override

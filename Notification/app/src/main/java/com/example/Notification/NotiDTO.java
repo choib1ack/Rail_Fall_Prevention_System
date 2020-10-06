@@ -1,6 +1,4 @@
-package com.example.trainnoti2;
-
-import android.graphics.Bitmap;
+package com.example.Notification;
 
 public class NotiDTO {
 

@@ -1,4 +1,4 @@
-package com.example.trainnoti2;
+package com.example.Notification;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -94,17 +93,15 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
 //            activity.dashboard_fragment.loading_circle.setVisibility(View.GONE);
 //        }
 
-//        holder.itemView.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(activity, DetailActivity.class);
-//                intent.putExtra("location", notification_list.get(position).getLocation());
-//                intent.putExtra("datetime", notification_list.get(position).getDatetime());
-//                intent.putExtra("status", notification_list.get(position).getState());
-//                intent.putExtra("image_name", notification_list.get(position).getImage_name());
-//                activity.startActivity(intent);
-//            }
-//        });
+        holder.itemView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, NotificationDetailActivity.class);
+                intent.putExtra("location", notification_list.get(position).getLocation());
+                intent.putExtra("datetime", notification_list.get(position).getDatetime());
+                activity.startActivity(intent);
+            }
+        });
     }
 
     @Override

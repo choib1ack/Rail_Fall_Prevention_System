@@ -1,8 +1,7 @@
-package com.example.trainnoti2;
+package com.example.Notification;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;

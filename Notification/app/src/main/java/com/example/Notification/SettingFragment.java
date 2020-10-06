@@ -1,4 +1,4 @@
-package com.example.trainnoti2;
+package com.example.Notification;
 
 import android.content.Intent;
 import android.os.Bundle;

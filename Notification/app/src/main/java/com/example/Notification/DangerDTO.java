@@ -1,4 +1,4 @@
-package com.example.trainnoti2;
+package com.example.Notification;
 
 public class DangerDTO {
     private String id;

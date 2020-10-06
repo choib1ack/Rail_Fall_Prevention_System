@@ -1,13 +1,15 @@
-package com.example.trainnoti2;
+package com.example.Notification;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -41,6 +43,18 @@ public class LoginActivity extends AppCompatActivity {
 
         if (mAuth.getCurrentUser() != null) {
 //            Intent intent = new Intent(getApplication(), DashboardActivity.class);
+            SharedPreferences pref = getSharedPreferences("Service socket info", MODE_PRIVATE);
+
+            String server_ip = pref.getString("server_ip", null);
+            Log.d("LoginActivity", "server ip --->" + server_ip);
+            if (server_ip != null && !isMyServiceRunning(NotiService.class)) { // 저장된 서버 ip가 있고 서비스가 실행되고 있지 않으면 자동 실행.
+
+                Intent intent = new Intent(getApplicationContext(), NotiService.class);
+                Toast.makeText(getApplicationContext(), "서비스 자동 시작", Toast.LENGTH_SHORT).show();
+                intent.putExtra("server_ip", server_ip);
+                startService(intent);
+            }
+
             Toast.makeText(getApplicationContext(), "자동 로그인", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getApplication(), MainActivity.class);
             startActivity(intent);
@@ -58,6 +72,16 @@ public class LoginActivity extends AppCompatActivity {
                 signIn();
             }
         });
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void signIn() {
