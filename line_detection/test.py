@@ -884,9 +884,20 @@ def popup_destroy():
     root.destroy()
 
 
+# 멀티 스레드 구현부분 (제어 part와 카메라 part를 나눈다)
+'''
+제어 UI
+'''
+def win_control():
+    control = Tk()
+    control.title("Control cam")
+    center_window(control, 300, 400)
+    control.resizable(False, False)
+
+    control.mainloop()
+
 def start_destroy():
     start.destroy()
-
 
 def system_destroy():
     sys.exit()
@@ -939,28 +950,19 @@ closeBtn.grid(row=0, column=1)
 
 start.mainloop()
 
-# 멀티 스레드 구현부분 (제어 part와 카메라 part를 나눈다)
-'''
-제어 UI
-'''
-control = Tk()
-control.title("Control cam")
-center_window(control, 300, 400)
-control.resizable(False, False)
-
-control.mainloop()
-
 # n은 카메라의 장치 번호를 의미합니다. 노트북을 이용할 경우, 내장 카메라가 존재하므로 카메라의 장치 번호는 0이 됩니다.
 # 카메라를 추가적으로 연결하여 외장 카메라를 사용하는 경우, 장치 번호가 1~n까지 변화합니다.
 
 # capture.set(option, n)을 이용하여 카메라의 속성을 설정할 수 있습니다.
 # option은 프레임의 너비와 높이 등의 속성을 설정할 수 있습니다.
 # n의 경우 해당 너비와 높이의 값을 의미합니다.
+
 capture = cv2.VideoCapture(0)
 capture.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
 capture.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
 
 cv2.namedWindow('Video frame')
+keyboardCount = 0
 
 while True:
     cv2.setMouseCallback('Video frame', mouse_callback)
@@ -968,7 +970,7 @@ while True:
     # 연속 프레임
     if pause == 0:
         ret, frame = capture.read()
-        cv2.waitKey(1)
+        k = cv2.waitKey(1)
         if check == 0:
             cv2.imshow("Video frame", frame)
         elif check == 1:
@@ -980,7 +982,7 @@ while True:
             make_roi()
 
         # 종료
-        if cv2.waitKey(1) & 0xFF == ord('q'): #q를 누르면 종료
+        if k == 27: #& 0xFF == ord('q'): #q를 누르면 종료
             '''
             알림(확인/취소) UI
             '''
@@ -1005,7 +1007,7 @@ while True:
 
             root.mainloop()
         # 프레임 고정
-        elif cv2.waitKey(1) & 0xFF == ord('f'): # 프레임 고정
+        elif k == 32: #& 0xFF == ord('f'): # 프레임 고정
             ret, frame = capture.read()
             pause = 1
             pre_event = -1
@@ -1026,7 +1028,7 @@ while True:
         cv2.waitKey(1)
 
         # 연속 프레임
-        if cv2.waitKey(1) & 0xFF == ord('d'):
+        if k == 18: #& 0xFF == ord('d'):
             pause = 0
             pre_event = -1
             check = 0
