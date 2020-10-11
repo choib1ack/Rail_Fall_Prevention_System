@@ -884,18 +884,6 @@ def popup_destroy():
     root.destroy()
 
 
-# 멀티 스레드 구현부분 (제어 part와 카메라 part를 나눈다)
-'''
-제어 UI
-'''
-def win_control():
-    control = Tk()
-    control.title("Control cam")
-    center_window(control, 300, 400)
-    control.resizable(False, False)
-
-    control.mainloop()
-
 def start_destroy():
     start.destroy()
 
@@ -957,12 +945,144 @@ start.mainloop()
 # option은 프레임의 너비와 높이 등의 속성을 설정할 수 있습니다.
 # n의 경우 해당 너비와 높이의 값을 의미합니다.
 
+# 멀티 스레드 구현부분 (제어 part와 카메라 part를 나눈다)
+'''
+제어 UI
+'''
+def win_control():
+    control = Tk()
+    control.title("Control cam")
+    center_window(control, 300, 400)
+    control.resizable(False, False)
+
 capture = cv2.VideoCapture(0)
 capture.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
 capture.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
 
 cv2.namedWindow('Video frame')
-keyboardCount = 0
+
+# 변경방법 1: 키보드 waitkey변경 (종료: ESC, 영상정지: space bar, 다시재생: Enter -- 한번씩만 눌러도 잘됨 (다시 재생은 잘 안됨))
+# while True:
+#     cv2.setMouseCallback('Video frame', mouse_callback)
+#
+#     # 연속 프레임
+#     if pause == 0:
+#         ret, frame = capture.read()
+#         k = cv2.waitKey(1)
+#         if check == 0:
+#             cv2.imshow("Video frame", frame)
+#         elif check == 1:
+#             fx1, fy1, fx2, fy2 = find_point((now_point[0][0], now_point[0][1]), (now_point[1][0], now_point[1][1]))
+#             fx3, fy3, fx4, fy4 = find_point((now_point[2][0], now_point[2][1]), (now_point[3][0], now_point[3][1]))
+#             cv2.line(frame, (fx1, fy1), (fx2, fy2), (0, 0, 255), 1)
+#             cv2.line(frame, (fx3, fy3), (fx4, fy4), (0, 0, 255), 1)
+#
+#             make_roi()
+#
+#         # 종료
+#         if k == 27: #& 0xFF == ord('q'): #q를 누르면 종료
+#             '''
+#             알림(확인/취소) UI
+#             '''
+#             root = Tk()
+#             root.title("프로그램")
+#             center_window(root, 400, 250)
+#             root.resizable(0, 0)
+#
+#             frame1 = Frame(root, relief="solid", height="100")
+#             frame1.pack(side="top")
+#             frame2 = Frame(root, relief="solid", height="100")
+#             frame2.pack(side="bottom", expand=True)
+#
+#             text = '종료하시겠습니까?'
+#             lbl = Label(frame1, text=text, font="NanumGothic 10")
+#             lbl.pack()
+#
+#             confirmBtn = Button(frame2, text='확인', width=3, height=1, command=system_destroy)
+#             confirmBtn.grid(row=0, column=0)
+#             cancelBtn = Button(frame2, text='취소', width=3, height=1, command=popup_destroy)
+#             cancelBtn.grid(row=0, column=1)
+#
+#             root.mainloop()
+#         # 프레임 고정
+#         elif k == 32: #& 0xFF == ord('f'): # 프레임 고정
+#             ret, frame = capture.read()
+#             pause = 1
+#             pre_event = -1
+#             now_frame = None
+#             ix, iy = -1, -1
+#             del pre_point[:]
+#             del now_point[:]
+#             del corners[:]
+#             del pre_frame[:]
+#             del margin_point[:]
+#             count = 0
+#             check = 0
+#
+#     # 고정 프레임
+#     elif pause == 1:
+#         if count == 0:
+#             cv2.imshow("Video frame", frame)
+#         cv2.waitKey(1)
+#
+#         # 연속 프레임
+#         if k == 13: #& 0xFF == ord('d'):
+#             pause = 0
+#             pre_event = -1
+#             check = 0
+#         # 마진 설정
+#         elif pre_event == cv2.EVENT_FLAG_RBUTTON:
+#             if count == 4:
+#                 value = 0
+#                 # 반드시 직선 2개가 있어야 마진을 설정할 수 있음
+#                 margin = Tk()
+#                 margin.title("Set margin")
+#                 center_window(margin, 400, 250)
+#                 margin.resizable(0, 0)
+#
+#                 margin_frame1 = Frame(margin, height=100)
+#                 margin_frame1.pack(side="top")
+#                 margin_frame2 = Frame(margin, height=100)
+#                 margin_frame2.pack(expand=True)
+#
+#                 margin_text = '< 마진을 설정해주세요 >\n(마진값 저장-> Enter key)\n\n'
+#                 margin_lbl1 = Label(margin_frame1, text=margin_text, font="NanumGothic 10")
+#                 margin_lbl1.grid(row=0, column=0, columnspan=2)
+#
+#                 text = '마진값:  '
+#                 margin_lbl2 = Label(margin_frame1, text=text, font="NanumGothic 10")
+#                 margin_lbl2.grid(row=1, column=0)
+#                 # value = StringVar()
+#                 txt = Entry(margin_frame1)
+#                 txt.bind("<Return>", save_value)
+#                 txt.grid(row=1, column=1)
+#
+#                 confirmBtn = Button(margin_frame2, text='확인', height=1, command=margin.destroy)
+#                 confirmBtn.grid(row=2, column=0)
+#                 backBtn = Button(margin_frame2, text='창 닫기', height=1, command=margin.destroy)
+#                 backBtn.grid(row=2, column=1)
+#
+#                 margin.mainloop()
+#
+#                 draw_margin_line()
+#
+#                 count_corners()
+#                 if count != 0:
+#                     sorting_corners()
+#
+#                     check = 1
+#                     pause = 0
+#
+#             elif count < 4:
+#                 '''
+#                 오류 메시지 UI
+#                 '''
+#                 warn_msg("직선 두개를 그려주세요")
+
+# ---------------------------------------------------------------------------------------
+# 변경방법 2: 새창 만들기
+
+openWindow = 0
 
 while True:
     cv2.setMouseCallback('Video frame', mouse_callback)
@@ -980,6 +1100,10 @@ while True:
             cv2.line(frame, (fx3, fy3), (fx4, fy4), (0, 0, 255), 1)
 
             make_roi()
+
+        if openWindow == 0:
+            win_control()
+            openWindow = 1
 
         # 종료
         if k == 27: #& 0xFF == ord('q'): #q를 누르면 종료
@@ -1028,7 +1152,7 @@ while True:
         cv2.waitKey(1)
 
         # 연속 프레임
-        if k == 18: #& 0xFF == ord('d'):
+        if k == 13: #& 0xFF == ord('d'):
             pause = 0
             pre_event = -1
             check = 0
@@ -1080,6 +1204,8 @@ while True:
                 오류 메시지 UI
                 '''
                 warn_msg("직선 두개를 그려주세요")
+
+control.mainloop()
 
 capture.release()
 cv2.destroyAllWindows()
