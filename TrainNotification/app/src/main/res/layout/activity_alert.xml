@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/alert_isConnectButton"
+        android:text="서비스 연결 확인"
+        android:background="@drawable/button_new"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"/>
+
+    <TextView
+        android:id="@+id/alert_isConnectText"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:text="연결되지 않음" />
+
+
+
+    <EditText
+        android:layout_gravity="center"
+        android:layout_width="250dp"
+        android:text="192.168.43.33"
+        android:layout_height="wrap_content"
+        android:id="@+id/server_ip"/>
+
+<!--    <Button-->
+<!--        android:id="@+id/alert_create"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="생성" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/alert_remove"-->
+<!--        android:text="삭제"-->
+<!--        android:layout_marginBottom="30dp"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"/>-->
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/alert_startService"
+            android:text="서비스 시작"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_type1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/alert_endService2"
+            android:text="서비스 중지"
+            android:background="@drawable/button_type1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/alert_notitest"
+            android:text="알림 생성!"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_type1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/alert_notitest_remove"
+            android:text="알림 삭제!"
+            android:background="@drawable/button_type1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
