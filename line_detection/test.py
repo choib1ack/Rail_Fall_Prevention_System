@@ -1057,7 +1057,7 @@ while True:
                 txt.bind("<Return>", save_value)
                 txt.grid(row=1, column=1)
 
-                confirmBtn = Button(margin, text='확인', width=3, height=1, command=margin.destroy)
+                confirmBtn = Button(margin_frame2, text='확인', width=3, height=1, command=margin.destroy)
                 confirmBtn.grid(row=2, column=0)
                 backBtn = Button(margin_frame2, text='뒤로 가기', height=1, command=margin.destroy)
                 backBtn.grid(row=2, column=1)
