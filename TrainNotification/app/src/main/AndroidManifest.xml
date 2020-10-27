@@ -18,7 +18,7 @@
         <activity android:name=".AlertActivity" />
         <activity android:name=".AlertClickActivity" />
         <activity android:name=".AlertRemoveActivity" />
-        <activity android:name=".DetailActivity" />
+        <activity android:name=".DetailActivity"/>
         <activity android:name=".NotificationDetailActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>

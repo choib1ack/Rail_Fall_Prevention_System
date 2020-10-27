@@ -79,7 +79,16 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.5"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/detail_change_status"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:text="처리 완료"
+                android:background="@drawable/button_type1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
     </LinearLayout>
 
