@@ -3,6 +3,7 @@ package com.example.trainnotification;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -84,15 +85,19 @@ public class NotificationDetailActivity extends AppCompatActivity {
                 }
                 try {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        DangerDTO value = snapshot.getValue(DangerDTO.class);
-                        Log.e("Detail 1-->", value.getDatetime());
+                        if(snapshot.getKey().equals(location)) {
+                            for(DataSnapshot dangerSnapshot : snapshot.getChildren()) {
+                                DangerDTO value = dangerSnapshot.getValue(DangerDTO.class);
+//                                Log.e("Detail 1-->", value.getDatetime());
 //                        assert value != null;
 //                        if (value.getDatetime().equals(datetime) && value.getLocation().equals(location)) {
-                        if (value.getDatetime().equals(datetime)) {
-                            Log.e("Detail 2-->", value.toString());
-                            result[0] = value;
-                            setUI(result[0]);
-                            break;
+                                if (value.getDatetime().equals(datetime)) {
+//                                    Log.e("Detail 2-->", value.toString());
+                                    result[0] = value;
+                                    setUI(result[0]);
+                                    break;
+                                }
+                            }
                         }
                     }
                 } catch (DatabaseException e) {
