@@ -12,11 +12,21 @@
     android:layout_marginRight="5dp"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/item_platform_star"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_star_border"
+        app:tint="@color/colorPrimary" />
+
     <TextView
+        android:layout_weight="5"
         android:id="@+id/item_platform_name"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:gravity="left|center"
+        android:layout_marginLeft="10dp"
         android:textColor="@color/black"
         android:text="플랫폼 이름" />
 

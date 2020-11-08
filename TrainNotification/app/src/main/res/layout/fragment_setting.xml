@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,7 +18,10 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginBottom="1dp"
-            android:background="@drawable/setting_list_selector2"
+            android:background="@drawable/setting_list_selector"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -25,7 +29,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginVertical="10dp"
                 android:padding="5dp"
-                android:src="@drawable/ic_person_black" />
+                android:src="@drawable/ic_person_black"
+                app:tint="@color/colorPrimary" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -43,7 +48,10 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginBottom="1dp"
-            android:background="@drawable/setting_list_selector2"
+            android:background="@drawable/setting_list_selector"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -51,7 +59,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginVertical="10dp"
                 android:padding="5dp"
-                android:src="@drawable/ic_version" />
+                android:src="@drawable/ic_version"
+                app:tint="@color/colorPrimary"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -86,7 +95,10 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginBottom="1dp"
-            android:background="@drawable/setting_list_selector2"
+            android:background="@drawable/setting_list_selector"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -94,6 +106,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginVertical="10dp"
                 android:padding="5dp"
+                app:tint="@color/colorPrimary"
                 android:src="@drawable/ic_notification" />
 
             <TextView
@@ -111,7 +124,10 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginBottom="1dp"
-            android:background="@drawable/setting_list_selector2"
+            android:background="@drawable/setting_list_selector"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -119,6 +135,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginVertical="10dp"
                 android:padding="5dp"
+                app:tint="@color/colorPrimary"
                 android:src="@drawable/ic_baseline_check_24" />
 
             <TextView

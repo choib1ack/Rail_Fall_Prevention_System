@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,10 +27,12 @@ public class PlatformAdapter extends RecyclerView.Adapter<PlatformAdapter.MyView
     // 리사이클러 뷰의 각 뷰에 들어갈 아이템들을 지정, 각 뷰는 뷰 홀더가 관여한다. 연결이 어댑터
     public class MyViewHolder extends  RecyclerView.ViewHolder {
         private TextView platform_name;
+        private ImageView star;
 
         public MyViewHolder(View view) {
             super(view);
             this.platform_name = view.findViewById(R.id.item_platform_name);
+            this.star = view.findViewById(R.id.item_platform_star);
         }
     }
 
@@ -42,6 +45,12 @@ public class PlatformAdapter extends RecyclerView.Adapter<PlatformAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+        holder.star.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                activity.platform_fragment.changeStarState(platformList.get(position));
+            }
+        });
         holder.platform_name.setText(platformList.get(position));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +60,6 @@ public class PlatformAdapter extends RecyclerView.Adapter<PlatformAdapter.MyView
                 activity.startActivity(intent);
             }
         });
-
     }
 
     @Override

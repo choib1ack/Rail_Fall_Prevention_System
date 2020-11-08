@@ -20,7 +20,7 @@
             android:layout_height="40dp"
             android:layout_margin="10dp"
             android:gravity="top|center"
-            android:src="@drawable/logo" />
+            android:src="@drawable/train_iamge" />
 
     </LinearLayout>
 
