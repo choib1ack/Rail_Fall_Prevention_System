@@ -166,11 +166,14 @@ public class DetailActivity extends AppCompatActivity {
         change_status_btn.setVisibility(View.GONE);
     }
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()) {
-            case android.R.id.home:
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ // 뒤로가기
+                finish();
                 return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

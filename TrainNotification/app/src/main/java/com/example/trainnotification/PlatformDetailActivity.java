@@ -3,8 +3,10 @@ package com.example.trainnotification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,8 +30,17 @@ public class PlatformDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_platform_detail);
 
+
+
         Intent intent = getIntent();
         String platform_name = intent.getStringExtra("platform_name");
+
+        //Toolbar
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.platform_detail_toolbar);
+        mToolbar.setTitle(platform_name);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         // recycler view setting
         recyclerView = findViewById(R.id.platform_detail_recyclerview);
@@ -70,6 +81,16 @@ public class PlatformDetailActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ // 뒤로가기
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
 }
