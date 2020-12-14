@@ -23,8 +23,6 @@ public class AlertActivity extends AppCompatActivity {
     private Button startServiceBtn;
     private Button endServiceBtn;
     private Button isConnectServiceBtn;
-    private Button notiTestBtn;
-    private Button notiTestRemoveBtn;
     private TextView inConnectText;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -38,8 +36,6 @@ public class AlertActivity extends AppCompatActivity {
         isConnectServiceBtn = findViewById(R.id.alert_isConnectButton);
         server_ip = findViewById(R.id.server_ip);
         inConnectText = findViewById(R.id.alert_isConnectText);
-        notiTestBtn = findViewById(R.id.alert_notitest);
-        notiTestRemoveBtn = findViewById(R.id.alert_notitest_remove);
 
         boolean result = isMyServiceRunning(NotiService.class);
         if(result){

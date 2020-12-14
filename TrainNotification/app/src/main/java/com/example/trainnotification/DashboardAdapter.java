@@ -89,7 +89,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
                         activity.dashboard_fragment.loading_circle.setVisibility(View.GONE);
                     }
                 } else {
-                    Toast.makeText(activity, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(activity, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

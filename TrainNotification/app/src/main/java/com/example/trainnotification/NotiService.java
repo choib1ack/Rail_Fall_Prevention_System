@@ -31,6 +31,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class NotiService extends Service {
+
     private String channel_id = "";
     private String server_ip = "";
     String TAG = "NotiService";
@@ -76,22 +77,25 @@ public class NotiService extends Service {
     }
 
     @Override
-    public void onDestroy() {
-        Log.d(TAG, "destroyed");
-        try {
-            thread.interrupt();
-            if (socket != null && !socket.isClosed()) {
-                socket.shutdownInput();
-                socket.close();
-            }
-            thread = null;
-            socket = null;
+        public void onDestroy() {
+            Log.d(TAG, "destroyed");
+            try {
+                if(thread !=null) {
+                    thread.interrupt();
+                    thread=null;
+                }
+                if (socket != null && !socket.isClosed()) {
+                    socket.shutdownInput();
+                    socket.close();
+                }
+                thread = null;
+                socket = null;
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.d(TAG, "socket close 실패");
-        }
-        super.onDestroy();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.d(TAG, "socket close 실패");
+            }
+            super.onDestroy();
     }
 
     private void notificationSetting() {
@@ -284,6 +288,7 @@ public class NotiService extends Service {
                     while (isReceiving) {
                         while (input.available() <= 0) {
                         } // 이거 효율적이게 바꿔야할듯
+
                         int filesize;
                         byte[] tmp = new byte[2];
                         input.read(tmp, 0, tmp.length);
@@ -301,6 +306,7 @@ public class NotiService extends Service {
                         byte[] image_data = new byte[filesize];
                         byte[] buffer = new byte[1024];
                         int img_offset = 0;
+
                         while (true) {
 //                            Log.d(TAG, "inputstream available ----> " + input.available() + " ");
                             int bytes_read = input.read(buffer, 0, buffer.length); // 버퍼만큼 바이트 데이터 수신, 데이터는 버퍼 안에 있고, 사이즈 리턴
