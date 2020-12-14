@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@drawable/dash_list_selector"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/item_platform_star_star"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_star"
+        app:tint="@color/colorAccent" />
+
+    <TextView
+        android:layout_weight="5"
+        android:id="@+id/item_platform_star_name"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="left|center"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/black"
+        android:text="플랫폼 이름" />
+
+</LinearLayout>

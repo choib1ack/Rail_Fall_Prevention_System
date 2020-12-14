@@ -64,27 +64,7 @@
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/alert_notitest"
-            android:text="알림 생성!"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/button_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <Button
-            android:id="@+id/alert_notitest_remove"
-            android:text="알림 삭제!"
-            android:background="@drawable/button_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
 
 
 </LinearLayout>

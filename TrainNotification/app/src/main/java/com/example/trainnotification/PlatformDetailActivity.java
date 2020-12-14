@@ -30,8 +30,6 @@ public class PlatformDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_platform_detail);
 
-
-
         Intent intent = getIntent();
         String platform_name = intent.getStringExtra("platform_name");
 
@@ -40,7 +38,6 @@ public class PlatformDetailActivity extends AppCompatActivity {
         mToolbar.setTitle(platform_name);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         // recycler view setting
         recyclerView = findViewById(R.id.platform_detail_recyclerview);
@@ -77,9 +74,8 @@ public class PlatformDetailActivity extends AppCompatActivity {
                 Log.d("Firebase DB Error ", error.toString());
             }
         });
-
-
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
