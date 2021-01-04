@@ -538,7 +538,6 @@ def draw_margin_line():
     y = []
     for point in now_point:
         x.append(point[0])
-        y.append(point[1])
 
     # x축과 맞물리는 각도를 구한다
     theta = []
