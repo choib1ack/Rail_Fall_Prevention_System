@@ -25,6 +25,7 @@ Brief Description
 - A system that uses edge computing techniques to help you deal with track crashes more quickly.
 - Use image recognition technology to determine if a person falls onto the track.
 - Sound an alarm when an accident occurs, and the application allows employees and station employees to quickly know about the accident.
+
 *The system was built with the following focus:*
 
 1. **'Quickness'** : To raise the alert notification and to receive information about an accident when a track crash occurs, use the method to increase the speed.
