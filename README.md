@@ -80,6 +80,44 @@ Process
     - 좌표가 경계선을 **넘어갔을 경우** : 추락으로 판단하여 엣지 디바이스와 연동된 앱으로 2차 **경고 알림 메세지**를 사고 정보와 함께 줍니다.  
     - 이때 만약 열차가 들어오게 된다면 열차에 탑승하는 것 또한 선로에 추락했다고 판단할 수 있기 때문에, 열차가 들어오는 시간에는 디텍션을 잠시 멈추게 됩니다.   
     
+Problem statement
+---------------------------
+1. The disadvantages of cloud computing in traditional image recognition systems
+![Architecture](https://github.com/JunHeon-Ch/Driver_License_Simulation/blob/main/wiki_image/architecture.png)
+- As is..
+    - Assuming that this system is used on a real-world platform, it sends a huge amount of frames from numerous cameras to the server.
+    - This process **consumes significant bandwidth** and at the same time is a **constant and significant burden on the Internet infrastructure**. This may also **lead to delays**.
+    - In our system, where **'real-time'** is important, we judged that the structure was inappropriate.
+- To be..
+    - The use of edge computing structures complements the disadvantages of cloud computing, **enabling data stream acceleration, including real-time data processing without latency**.
+    - Taking these advantages of edge computing, we designed our system structure, which is important for real-time.
+2. Processing optimization   
+- Edge systems show weakness over cloud-based systems in terms of **computational performance**.
+- To compensate for the weakness of processing performance in edge computing, we have devised three ways to **reduce the size of the computations** that need to be handled.
+    - **Minimize the range of detection** by only the area inside and near the track, not the entire image, of the area that detects the accident.
+    - Increase accuracy and speed by **limiting objects to be detected to people only**.
+    - **Optimization of YOLO model** increases inference performance and speed.
+
+1. 기존 영상인식 시스템에서 사용되는 클라우드 컴퓨팅의 단점
+![Architecture](https://github.com/JunHeon-Ch/Driver_License_Simulation/blob/main/wiki_image/architecture.png)
+- As is..
+    - 이 시스템을 실제 플랫폼에서 사용한다고 가정해보면, 수많은 카메라로부터 얻어지는 엄청난 양의 프레임을 서버로 전송하게 된다.
+    - 이 과정에서 **상당한 대역폭이 소비되고** 이와 동시에 **인터넷 인프라에 지속적이고 상당한 부담이 됩니다**. 또한, 이로 인해 **지연이 발생**할 가능성이 있습니다. 
+    - **'실시간성'** 이 중요한 저희 시스템에서는 해당 구조가 부적합하다고 판단하였습니다. 
+- To be..
+    - 엣지 컴퓨팅 구조를 사용하게 되면, 클라우드 컴퓨팅의 단점을 보완해 **대기 시간 없이 실시간 데이터 처리를 포함하여 데이터 스트림 가속화를 가능하게 해줍니다**. 
+    - 이러한 엣지 컴퓨팅의 장점을 살려 실시간성이 중요한 저희 시스템 구조를 고안하였습니다.
+2. 프로세싱 최적화   
+- 엣지 시스템은 성능 면에서는 클라우드 기반 시스템보다 약점을 보입니다.
+- 엣지 컴퓨팅 성능의 약점을 보완하고자 저희는 처리해야 할 연산의 크기를 줄이는 3가지 방법을 고안했다.
+    - 사고 상황을 감지하는 지역을 영상 전체가 아닌 선로 내부와 근처 영역만으로 **디텍션 범위를 최소화**.
+    - **디텍션 할 오브젝트를 사람으로만 한정**하여 정확도와 신속성을 높임.
+    - **YOLO 모델의 최적화**를 통해 추론 성능과 속도를 높임.
+    
+Architecture
+---------------------------
+
+
 Technology
 ---------------------------
 > ### Edge Computing
