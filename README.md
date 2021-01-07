@@ -16,6 +16,27 @@ DEMO video
 ---------------------------
 [![Demo video](https://img.youtube.com/vi/E-d7NiPAkk8/0.jpg)](https://www.youtube.com/watch?v=E-d7NiPAkk8)
 
+Brief Description
+---------------------------
+- A system that uses edge computing techniques to help you deal with track crashes more quickly.
+- Use image recognition technology to determine if a person falls onto the track.
+- Sound an alarm when an accident occurs, and the application allows employees and station employees to quickly know about the accident.
+*The system was built with the following focus:*
+
+1. **'Quickness'** : To raise the alert notification and to receive information about an accident when a track crash occurs, use the method to increase the speed.
+2. **'Correctness'**: Because it is very important to determine whether a fall occurred or not, use the method the method to increase the accuracy.
+
+---------------------------
+- 엣지 컴퓨팅기법을 통해 좀 더 빠르게 선로추락사고에 대한 대처를 할 수 있도록 하는 시스템입니다.
+- 영상인식 기술을 통해 사람이 선로에 떨어지는지에 대한 여부를 판단합니다.
+- 사고가 났을때 경고음을 울려주고, 앱을 통해 사고에 대한 정보를 빠르게 알 수 있습니다.
+
+*이 시스템은 다음과 같은 사항을 중점적으로 고려하여 만들어졌습니다.*
+
+1. **`신속성`** : 선로추락사고가 발생하였을때 빠르게 경고 알림을 울리게 하거나 사고에 대한 정보를 전달받기 위해 신속성을 높이기위한 방법을 사용합니다.
+
+2. **`정확성`** : 추락사고의 여부를 판단하는 데 있어서 정확한 판단히 매우 중요하기 때문에 정확성을 높이기위한 방법을 사용합니다.
+
 Motivation
 ---------------------------
 - **Accident occurrence**   
@@ -28,29 +49,16 @@ GIDS can be applied to a variety of platforms because it can be used to reduce c
 
 **To compensate for the shortcomings of traditional screen doors and GIDS, we have devised a *imaging recognition-based" track crash prevention system that can be used to determine falls using images.***
 
+---------------------------
 - **사고 발생**   
 사람들이 자주 이용하는 열차에서는 매년 *크고 작은 사고가 발생하며* 실수로 스크린도어나 안전장벽이 없는 선로에 떨어지거나 뛰어내리는 경우가 많습니다.
 - **플랫폼 스크린 도어(PSD) 설치 어려움**   
-현재 대부분의 승강장에는 스크린도어가 설치되어 있지만 KTX나 무궁화호 열차가 정차하는 승강장에서는 열차 문마다 크기, 높이, 위치가 달라 *정지 위치 유지*에 어려움을 겪고 있다.
+현재 대부분의 승강장에는 스크린도어가 설치되어 있지만 KTX나 무궁화호 열차가 정차하는 승강장에서는 열차 문마다 크기, 높이, 위치가 달라 *정지 위치 유지*에 어려움을 겪고 있습니다.
 스크린 도어 설치에 대한 예산 문제로 인해 일부 지역의 *스크린 도어 설치율이 매우 낮습니다*.
 - **GIDS**   
 GIDS는 적외선센서를 이용해 접근거리를 인식하는 기술을 이용하여 비용도 절감할 수 있어 다양한 플랫폼에 적용할 수 있지만 *센서 제한 때문에 정확도가 낮습니다*.
 
-**기존의 스크린 도어와 GIDS의 단점을 보완하기 위해 영상을 활용하여 추락을 판단할 수 있는 *'영상 인식 기반' 선로 추락 방지 시스템을 고안했다.***
-
-
-
-Brief Description
----------------------------
-- 엣지 컴퓨팅기법을 통해 좀 더 빠르게 선로추락사고에 대한 대처를 할 수 있도록 하는 시스템입니다.
-- 영상인식 기술을 통해 사람이 선로에 떨어지는지에 대한 여부를 판단합니다.
-- 사고가 났을때 경고음을 울려주고, 앱을 통해 사고에 대한 정보를 빠르게 알 수 있습니다.
-
-*이 시스템은 다음과 같은 사항을 중점적으로 고려하여 만들어졌습니다.*
-
-1. **`신속성`** : 선로추락사고가 발생하였을때 빠르게 경고 알림을 울리게 하거나 사고에 대한 정보를 전달받기 위해 신속성을 높이기위한 방법을 사용합니다.
-
-2. **`정확성`** : 추락사고의 여부를 판단하는 데 있어서 정확한 판단히 매우 중요하기 때문에 정확성을 높이기위한 방법을 사용합니다.
+**기존의 스크린 도어와 GIDS의 단점을 보완하기 위해 영상을 활용하여 추락을 판단할 수 있는 *'영상 인식 기반' 선로 추락 방지 시스템을 고안하였습니다.***
 
 Process
 ---------------------------
@@ -67,6 +75,7 @@ Process
     - If coordinates **are crossed the boundary**: Application linked to edge devices will be used with secondary **warning notification message** along with incident information. 
     - If the train comes in, the detection will be temporarily stopped during the train's entry, as it can also be determined that boarding the train has crashed onto the tracks.
     
+---------------------------
 1. 프로그램을 실행시킵니다.
 2. 카메라로부터 얻어진 이미지에서 자동으로 직선을 검출합니다.
 3. 사용자가 검출된 직선으로부터 적절한 선로 경계선을 선택하고 마진값을 입력합니다. 
@@ -83,7 +92,7 @@ Process
 Problem statement
 ---------------------------
 1. The disadvantages of cloud computing in traditional image recognition systems
-![Architecture](https://github.com/JunHeon-Ch/Driver_License_Simulation/blob/main/wiki_image/architecture.png)
+![Architecture](https://github.com/JunHeon-Ch/Rail_Fall_Prevention_System/blob/master/wiki_image/architecture.png)
 - As is..
     - Assuming that this system is used on a real-world platform, it sends a huge amount of frames from numerous cameras to the server.
     - This process **consumes significant bandwidth** and at the same time is a **constant and significant burden on the Internet infrastructure**. This may also **lead to delays**.
@@ -98,8 +107,9 @@ Problem statement
     - Increase accuracy and speed by **limiting objects to be detected to people only**.
     - **Optimization of YOLO model** increases inference performance and speed.
 
+---------------------------
 1. 기존 영상인식 시스템에서 사용되는 클라우드 컴퓨팅의 단점
-![Architecture](https://github.com/JunHeon-Ch/Driver_License_Simulation/blob/main/wiki_image/architecture.png)
+![Architecture](https://github.com/JunHeon-Ch/Rail_Fall_Prevention_System/blob/master/wiki_image/architecture.png)
 - As is..
     - 이 시스템을 실제 플랫폼에서 사용한다고 가정해보면, 수많은 카메라로부터 얻어지는 엄청난 양의 프레임을 서버로 전송하게 된다.
     - 이 과정에서 **상당한 대역폭이 소비되고** 이와 동시에 **인터넷 인프라에 지속적이고 상당한 부담이 됩니다**. 또한, 이로 인해 **지연이 발생**할 가능성이 있습니다. 
@@ -113,10 +123,6 @@ Problem statement
     - 사고 상황을 감지하는 지역을 영상 전체가 아닌 선로 내부와 근처 영역만으로 **디텍션 범위를 최소화**.
     - **디텍션 할 오브젝트를 사람으로만 한정**하여 정확도와 신속성을 높임.
     - **YOLO 모델의 최적화**를 통해 추론 성능과 속도를 높임.
-    
-Architecture
----------------------------
-
 
 Technology
 ---------------------------
