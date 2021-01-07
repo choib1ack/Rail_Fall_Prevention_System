@@ -26,7 +26,7 @@ Due to the budget problem for installing screen doors, *the installation rate of
 - **GIDS**   
 GIDS can be cost-saving and applicable to a variety of platforms using infrared sensors to recognize access, but *its accuracy is low due to sensor limitations*.
 
-** To compensate for the shortcomings of existing screen doors and GIDS, *we came up with a 'image recognition-based' rail fall prevention system that can be used to determine the rail fall* **
+**To compensate for the shortcomings of existing screen doors and GIDS, *we came up with a 'image recognition-based' rail fall prevention system that can be used to determine the rail fall***
 
 
 Brief Description
