@@ -24,9 +24,20 @@ On trains that are frequently used by people, *large and small accidents occur* 
 Currently, most platforms are equipped with screen doors, but some platforms where KTX or Mugunghwa trains stop *have difficulty keeping the stationary position* due to the varying size, height, and location of each train door.   
 Due to the budget problem for installing screen doors, *the installation rate of screen doors* in some areas is *quite low*.
 - **GIDS**   
-GIDS can be cost-saving and applicable to a variety of platforms using infrared sensors to recognize access, but *its accuracy is low due to sensor limitations*.
+GIDS can be applied to a variety of platforms because it can be used to reduce costs by using infrared sensors to recognize access distances, *but its accuracy is low due to sensor limitations*.
 
-**To compensate for the shortcomings of existing screen doors and GIDS, *we came up with a 'image recognition-based' rail fall prevention system that can be used to determine the rail fall.***
+**To compensate for the shortcomings of traditional screen doors and GIDS, we have devised a *imaging recognition-based" track crash prevention system that can be used to determine falls using images.***
+
+- **사고 발생**
+사람들이 자주 이용하는 열차에서는 매년 *크고 작은 사고가 발생하며* 실수로 스크린도어나 안전장벽이 없는 선로에 떨어지거나 뛰어내리는 경우가 많습니다.
+- **플랫폼 스크린 도어(PSD) 설치 어려움**
+현재 대부분의 승강장에는 스크린도어가 설치되어 있지만 KTX나 무궁화호 열차가 정차하는 승강장에서는 열차 문마다 크기, 높이, 위치가 달라 *정지 위치 유지*에 어려움을 겪고 있다.
+스크린 도어 설치에 대한 예산 문제로 인해 일부 지역의 *스크린 도어 설치율이 매우 낮습니다*.
+- **GIDS**
+GIDS는 적외선센서를 이용해 접근거리를 인식하는 기술을 이용하여 비용도 절감할 수 있어 다양한 플랫폼에 적용할 수 있지만 *센서 제한 때문에 정확도가 낮습니다*.
+
+**기존의 스크린 도어와 GIDS의 단점을 보완하기 위해 영상을 활용하여 추락을 판단할 수 있는 *'영상 인식 기반' 선로 추락 방지 시스템을 고안했다.***
+
 
 
 Brief Description
@@ -52,9 +63,22 @@ Process
 7. At this point, the coordinates of the center point at the bottom of the investegated bounder box are considered to be the coordinates of the human foot.
 8. Use the foot coordinates to determine the fall.
 - If the system determines that a person has fallen, it notifies in two ways:
-    - If coordinates are **reached at the boundary**: The speakers installed on the edge device will give **a warning sound** as the primary warning.
-    - If coordinates are **crossed the boundary**: Application linked to edge devices will be used with secondary **warning notification message** along with incident information. 
+    - If coordinates **are reached at the boundary**: The speakers installed on the edge device will give **a warning sound** as the primary warning.
+    - If coordinates **are crossed the boundary**: Application linked to edge devices will be used with secondary **warning notification message** along with incident information. 
     - If the train comes in, the detection will be temporarily stopped during the train's entry, as it can also be determined that boarding the train has crashed onto the tracks.
+    
+1. 프로그램을 실행시킵니다.
+2. 카메라로부터 얻어진 이미지에서 자동으로 직선을 검출합니다.
+3. 사용자가 검출된 직선으로부터 적절한 선로 경계선을 선택하고 마진값을 입력합니다. 
+4. 검출된 직선중 적합한 직선이 없을 경우, 직선의 탐색 범위를 더 넓혀 적합한 직선이 검출되도록 해줍니다.
+5. 선택한 직선으로부터 마진을 추가하고 해당 구역을 Region Of Interest(ROI)로 설정합니다.
+6. ROI 내의 사람 오브젝트만을 디텍션하여 실시간으로 선로에 추락한 사람이 있는지 판단하게 됩니다.
+7. 이때, 탐색된 바운더리 박스 밑변의 중앙 점의 좌표를 사람 발의 좌표라고 판단합니다.
+8. 발 좌표를 이용하여 추락을 판단합니다.
+- 시스템이 사람이 추락했다고 판단했을 경우 다음 두가지 방법으로 알림을 줍니다.
+    - 좌표가 경계선에 **걸쳤을 경우** : 엣지 디바이스에 설치된 스피커에서 1차 경고로 **경고음**을 줍니다.
+    - 좌표가 경계선을 **넘어갔을 경우** : 추락으로 판단하여 엣지 디바이스와 연동된 앱으로 2차 **경고 알림 메세지**를 사고 정보와 함께 줍니다.  
+    - 이때 만약 열차가 들어오게 된다면 열차에 탑승하는 것 또한 선로에 추락했다고 판단할 수 있기 때문에, 열차가 들어오는 시간에는 디텍션을 잠시 멈추게 됩니다.   
     
 Technology
 ---------------------------
