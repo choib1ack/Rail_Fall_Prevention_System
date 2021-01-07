@@ -18,9 +18,14 @@ DEMO video
 
 Motivation
 ---------------------------
-- **Fall or jump onto track**:   
-On trains that are frequently used by people, large and small accidents occur every year, and they often accidentally fall or jump onto tracks without a screen door or safety barrier.
-- 
+- **Accident occurrence**   
+On trains that are frequently used by people, *large and small accidents occur* every year, and they often accidentally fall or jump onto tracks without a screen door or safety barrier.
+- **Difficulty installing Platform Screen door(PSD)**   
+Currently, most platforms are equipped with screen doors, but some platforms where KTX or Mugunghwa trains stop *have difficulty keeping the stationary position* due to the varying size, height, and location of each train door.   
+Due to the budget problem for installing screen doors, *the installation rate of screen doors* in some areas is *quite low*.
+- **GIDS**   
+GIDS can be cost-saving and applicable to a variety of platforms using infrared sensors to recognize access, but its accuracy is low due to sensor limitations.
+
 
 Brief Description
 ---------------------------
