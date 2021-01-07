@@ -18,7 +18,7 @@ DEMO video
 
 Motivation
 ---------------------------
-- **Fall or jump onto track**: On trains that are frequently used by people, large and small accidents occur every year, and they often accidentally fall or jump onto tracks without a screen door or safety barrier.
+- **Fall or jump onto track**:      On trains that are frequently used by people, large and small accidents occur every year, and they often accidentally fall or jump onto tracks without a screen door or safety barrier.
 - 
 
 Brief Description
