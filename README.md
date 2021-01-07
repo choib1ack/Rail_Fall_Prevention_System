@@ -28,12 +28,12 @@ GIDS can be applied to a variety of platforms because it can be used to reduce c
 
 **To compensate for the shortcomings of traditional screen doors and GIDS, we have devised a *imaging recognition-based" track crash prevention system that can be used to determine falls using images.***
 
-- **사고 발생**
+- **사고 발생**   
 사람들이 자주 이용하는 열차에서는 매년 *크고 작은 사고가 발생하며* 실수로 스크린도어나 안전장벽이 없는 선로에 떨어지거나 뛰어내리는 경우가 많습니다.
-- **플랫폼 스크린 도어(PSD) 설치 어려움**
+- **플랫폼 스크린 도어(PSD) 설치 어려움**   
 현재 대부분의 승강장에는 스크린도어가 설치되어 있지만 KTX나 무궁화호 열차가 정차하는 승강장에서는 열차 문마다 크기, 높이, 위치가 달라 *정지 위치 유지*에 어려움을 겪고 있다.
 스크린 도어 설치에 대한 예산 문제로 인해 일부 지역의 *스크린 도어 설치율이 매우 낮습니다*.
-- **GIDS**
+- **GIDS**   
 GIDS는 적외선센서를 이용해 접근거리를 인식하는 기술을 이용하여 비용도 절감할 수 있어 다양한 플랫폼에 적용할 수 있지만 *센서 제한 때문에 정확도가 낮습니다*.
 
 **기존의 스크린 도어와 GIDS의 단점을 보완하기 위해 영상을 활용하여 추락을 판단할 수 있는 *'영상 인식 기반' 선로 추락 방지 시스템을 고안했다.***
