@@ -26,7 +26,7 @@ Due to the budget problem for installing screen doors, *the installation rate of
 - **GIDS**   
 GIDS can be cost-saving and applicable to a variety of platforms using infrared sensors to recognize access, but *its accuracy is low due to sensor limitations*.
 
-**To compensate for the shortcomings of existing screen doors and GIDS, *we came up with a 'image recognition-based' rail fall prevention system that can be used to determine the rail fall***
+**To compensate for the shortcomings of existing screen doors and GIDS, *we came up with a 'image recognition-based' rail fall prevention system that can be used to determine the rail fall.***
 
 
 Brief Description
@@ -43,18 +43,19 @@ Brief Description
 
 Process
 ---------------------------
-1. 카메라를 실행시킵니다.
-2. 카메라로부터 얻어진 이미지를 토대로, 자동 직선검출을 이용해 구역이 지정됩니다.
-3. 검출된 직선구역으로 부족할 경우, 직선의 탐색 범위를 더 넓히고, 마진을 두어 ROI를 설정합니다.
-4. 지정된 ROI에서 탐색된 바운더리 박스 밑변의 중앙 점의 좌표를 추출합니다. 
-5. 추출한 좌표를 이용하여 추락을 판단합니다.
-
-
-6. 추락했다고 판단했을 경우 다음 두가지 방법으로 알림을 줍니다.
-    - 좌표가 경계에 **걸쳤을경우** : 엣지 디바이스에 장착된 스피커에서 1차 경고로 **경고음**을 줍니다.
-    - 좌표가 경계를 **넘어갔을 경우** : 추락으로 판단하여 엣지 디바이스와 연동된 앱으로 2차 **경고 알림 메세지**를 사고 정보와 함께 줍니다.
-
-
+1. Run the program.
+2. Area is specified using automatic straight line detection from images obtained from the camera.
+3. The user selects the appropriate track boundary from the detected straight line and enters the margin value.
+4. If there is no suitable line among the detected lines, expand the scope of the search for the straight line to detect the appropriate line.
+5. Add margins from the selected straight line and set the zone to Region Of Interest (ROI).
+6. Only the person objects within the ROI will be detailed to determine in real time if there is a person who has fallen on the track.
+7. At this point, the coordinates of the center point at the bottom of the investegated bounder box are considered to be the coordinates of the human foot.
+8. Use the foot coordinates to determine the fall.
+- If the system determines that a person has fallen, it notifies in two ways:
+    - If coordinates are **reached at the boundary**: The speakers installed on the edge device will give **a warning sound** as the primary warning.
+    - If coordinates are **crossed the boundary**: Application linked to edge devices will be used with secondary **warning notification message** along with incident information. 
+    - If the train comes in, the detection will be temporarily stopped during the train's entry, as it can also be determined that boarding the train has crashed onto the tracks.
+    
 Technology
 ---------------------------
 > ### Edge Computing
