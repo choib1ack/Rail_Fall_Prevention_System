@@ -83,7 +83,7 @@ Process
 Problem statement
 ---------------------------
 1. The disadvantages of cloud computing in traditional image recognition systems
-![Architecture](https://github.com/JunHeon-Ch/Driver_License_Simulation/blob/main/wiki_image/architecture.png)
+![Architecture](https://github.com/JunHeon-Ch/Rail_Fall_Prevention_System/blob/master/wiki_image/architecture.png)
 - As is..
     - Assuming that this system is used on a real-world platform, it sends a huge amount of frames from numerous cameras to the server.
     - This process **consumes significant bandwidth** and at the same time is a **constant and significant burden on the Internet infrastructure**. This may also **lead to delays**.
@@ -99,7 +99,7 @@ Problem statement
     - **Optimization of YOLO model** increases inference performance and speed.
 
 1. 기존 영상인식 시스템에서 사용되는 클라우드 컴퓨팅의 단점
-![Architecture](https://github.com/JunHeon-Ch/Driver_License_Simulation/blob/main/wiki_image/architecture.png)
+![Architecture](https://github.com/JunHeon-Ch/Rail_Fall_Prevention_System/blob/master/wiki_image/architecture.png)
 - As is..
     - 이 시스템을 실제 플랫폼에서 사용한다고 가정해보면, 수많은 카메라로부터 얻어지는 엄청난 양의 프레임을 서버로 전송하게 된다.
     - 이 과정에서 **상당한 대역폭이 소비되고** 이와 동시에 **인터넷 인프라에 지속적이고 상당한 부담이 됩니다**. 또한, 이로 인해 **지연이 발생**할 가능성이 있습니다. 
