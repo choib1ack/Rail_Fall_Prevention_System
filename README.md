@@ -16,6 +16,12 @@ DEMO video
 ---------------------------
 [![Demo video](https://img.youtube.com/vi/E-d7NiPAkk8/0.jpg)](https://www.youtube.com/watch?v=E-d7NiPAkk8)
 
+Motivation
+---------------------------
+- Fall or jump onto track
+-- On trains that are frequently used by people, large and small accidents occur every year, and they often accidentally fall or jump onto tracks without a screen door or safety barrier.
+- 
+
 Brief Description
 ---------------------------
 - 엣지 컴퓨팅기법을 통해 좀 더 빠르게 선로추락사고에 대한 대처를 할 수 있도록 하는 시스템입니다.
