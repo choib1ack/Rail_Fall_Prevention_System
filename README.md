@@ -1,14 +1,14 @@
 Rail Fall Prevention System
 =============================
-Rail Fall Prevention System은 사람이 선로에 떨어지는지에 대한 여부를 판단하여 선로추락사고를 방지하기 위한 시스템입니다.   
+The Rail Fall Prevention System is designed to prevent track crashes by determining whether a person falls on a track.
 
 [Introduction Videos](https://github.com/JunHeon-Ch/Rail_Fall_Prevention_System/wiki/Videos)
 ---------------------------
-Proposal 영상을 시청하려면 다음 사진을 클릭해주세요.
+Click on the following picture to watch the *Proposal video*.
 
 [![Proposal 영상을 시청하려면 다음 사진을 클릭해주세요.](https://img.youtube.com/vi/II5gYJ-4010/0.jpg)](https://www.youtube.com/watch?v=II5gYJ-4010)
 
-Final 영상을 시청하려면 다음 사진을 클릭해주세요.
+Click on the following picture to watch the *Final video*.
 
 [![Final 영상을 시청하려면 다음 사진을 클릭해주세요.](https://img.youtube.com/vi/kym3mti6I8A/0.jpg)](https://www.youtube.com/watch?v=kym3mti6I8A&feature=youtu.be)
 
