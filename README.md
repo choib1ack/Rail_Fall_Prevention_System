@@ -1,6 +1,6 @@
 Rail Fall Prevention System
 =============================
-The Rail Fall Prevention System is designed to prevent track crashes by determining whether a person falls on a track.
+The Rail Fall Prevention System is designed to prevent rail crashes by determining whether a person fall on a rail.
 
 [Introduction Videos](https://github.com/JunHeon-Ch/Rail_Fall_Prevention_System/wiki/Videos)
 ---------------------------
