@@ -1,5 +1,7 @@
-Rail Fall Prevention System [English](https://github.com/JunHeon-Ch/Rail_Fall_Prevention_System/wiki/English) [Korean](https://github.com/JunHeon-Ch/Rail_Fall_Prevention_System/wiki/Korean)
+Rail Fall Prevention System 
 =============================
+[English](https://github.com/JunHeon-Ch/Rail_Fall_Prevention_System/wiki/English) [Korean](https://github.com/JunHeon-Ch/Rail_Fall_Prevention_System/wiki/Korean)
+
 The Rail Fall Prevention System is designed to prevent rail crashes by determining whether a person fall on a rail.
 
 [Introduction Videos](https://github.com/JunHeon-Ch/Rail_Fall_Prevention_System/wiki/Videos)
