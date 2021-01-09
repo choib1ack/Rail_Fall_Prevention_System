@@ -32,6 +32,7 @@ Brief Description
 
 1. **'Quickness'** : To raise the alert notification and to receive information about an accident when a track crash occurs, use the method to increase the speed.
 2. **'Correctness'**: Because it is very important to determine whether a fall occurred or not, use the method the method to increase the accuracy.
+
 ---------------------------
 
 Motivation
@@ -45,6 +46,7 @@ Due to the budget problem for installing screen doors, *the installation rate of
 GIDS can be applied to a variety of platforms because it can be used to reduce costs by using infrared sensors to recognize access distances, *but its accuracy is low due to sensor limitations*.
 
 **To compensate for the shortcomings of traditional screen doors and GIDS, we have devised a *imaging recognition-based" track crash prevention system that can be used to determine falls using images.***
+
 ---------------------------
 
 Process
@@ -61,6 +63,7 @@ Process
     - If coordinates **are reached at the boundary**: The speakers installed on the edge device will give **a warning sound** as the primary warning.
     - If coordinates **are crossed the boundary**: Application linked to edge devices will be used with secondary **warning notification message** along with incident information. 
     - If the train comes in, the detection will be temporarily stopped during the train's entry, as it can also be determined that boarding the train has crashed onto the tracks.
+    
 ---------------------------
 
 Problem statement
@@ -80,6 +83,7 @@ Problem statement
     - **Minimize the range of detection** by only the area inside and near the track, not the entire image, of the area that detects the accident.
     - Increase accuracy and speed by **limiting objects to be detected to people only**.
     - **Optimization of YOLO model** increases inference performance and speed.
+    
 ---------------------------
 
 Technology
@@ -107,6 +111,7 @@ Technology
 > ### Mobile Application
 - Risk detection information can be sent to the stakeholders via socket and stored in the Firebase database to check the accident history with the app.
 - Multiple clients can be managed with multi-threading.
+
 ---------------------------
 
 Result
@@ -114,6 +119,7 @@ Result
 ![Result](https://github.com/JunHeon-Ch/Rail_Fall_Prevention_System/blob/master/wiki_image/result1.png)
 ![Result](https://github.com/JunHeon-Ch/Rail_Fall_Prevention_System/blob/master/wiki_image/result2.png)
 As a result of minimizing of process, we significantly reduced the number of object detection, and the results of checking processing time per frame have been reduced by approximately 12 seconds in vedio that takes 1 minute and 17 seconds, resulting in a **performance improvement of 1.84%** over just using the model.
+
 ---------------------------
 
 Team Members
