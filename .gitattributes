@@ -1,2 +1,0 @@
-Rail_Fall_Prevention_System_Final.pptx filter=lfs diff=lfs merge=lfs -text
-Detection/yolo/yolov4-416.* filter=lfs diff=lfs merge=lfs -text
