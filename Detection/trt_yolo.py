@@ -1283,7 +1283,7 @@ def loop_and_detect(cam, trt_yolo, cls_dict, conf_th, vis):
     server_th.start()
 
     # 열차 들어오는 시간을 csv 파일로 받은 후에 해당 시간에는 detection을 멈춘다.
-    stop_data = pd.read_csv('stop_detection.csv')
+    stop_data = pd.read_csv('./noti/stop_detection.csv')
     index = 0
     for i in range(len(stop_data)):
         now = int(time.strftime('%H%M%S'))
@@ -1574,11 +1574,11 @@ def main():
         cam.img_width, cam.img_height)
     vis = BBoxVisualization(cls_dict)
     pcss_time, t_list, d_list = loop_and_detect(cam, trt_yolo, cls_dict, conf_th=0.3, vis=vis)
-
+    
     print(pcss_time)
     print(t_list)
     print(d_list)
-    
+
     cam.release()
     cv2.destroyAllWindows()
 
